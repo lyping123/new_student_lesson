@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Loop/array</title>
+</head>
+<body>
+    <h1>JavaScript Course 3</h1>
+    <p>Welcome to the third course on JavaScript!</p>
+
+    <p id="fruitDisplay"></p>
+     <p id="integerDisplay"></p>
+    <script>
+        let Fruit="apple";
+        let Fruits=["apple","banana","orange","grape",'mango','kiwi','pear','peach'];
+        
+        // for loop
+        for(let i=0;i<Fruits.length;i++){
+            document.getElementById("fruitDisplay").innerHTML+=Fruits[i]+"<br>";
+        }
+
+        //while loop
+        let j=0;
+        while(j<Fruits.length){
+            document.getElementById("fruitDisplay").innerHTML+=Fruits[j]+"<br>";
+            j++;
+        }
+
+        // do while loop
+        let k=0;
+        do{
+            document.getElementById("fruitDisplay").innerHTML+=Fruits[k]+"<br>";
+            k++;
+        }while(k<Fruits.length);
+
+        //foreach Loop
+        Fruits.forEach(function(fruit){
+            document.getElementById("fruitDisplay").innerHTML+=fruit+"<br>";
+        });
+
+        for(let i=100;i>=1;i--){
+            document.getElementById("integerDisplay").innerHTML+=i+"<br>";
+        }
+        
+
+    </script>
+    
+</body>
+</html>

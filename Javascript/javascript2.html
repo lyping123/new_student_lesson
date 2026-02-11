@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript Course 2</h1>
+    <p>Welcome to the second course on JavaScript!</p>
+
+    <label for="num1">Number 1:</label>
+    <input type="number" id="num1"  value="0">
+    <br>
+    <label for="num2">Number 2:</label>
+    <input type="number" id="num2" value="0">
+    <button type="button" value="plus">Plus</button>
+    <button type="button" value="minus">Minus</button>
+    <button type="button" value="multiply">Multiply</button>
+    <button type="button" value="divide">Divide</button>
+
+    <p id="result"></p>
+
+    <script>
+        //plus operator
+        let x =document.querySelector("#num1").value;
+        let y =document.querySelector("#num2").value;
+        function addNumbers(a,b){
+            return a + b;
+        }
+        //minus operator
+        function subtractNumbers(a,b){
+            return a - b;
+        }
+        //multiply operator
+        function multiplyNumbers(a,b){
+            return a * b;
+        }
+        //divide operator
+        function divideNumbers(a,b){
+            return a / b;
+        }
+
+        document.querySelectorAll("button").forEach(function(button){
+            button.onclick=function(event){
+                x =parseFloat(document.querySelector("#num1").value);
+                y =parseFloat(document.querySelector("#num2").value);
+                const p=document.getElementById("result");
+                if(event.target.value==="plus"){
+                    p.innerHTML=addNumbers(x,y);
+                }else if(event.target.value==="minus"){
+                    p.innerHTML=subtractNumbers(x,y);
+                }else if(event.target.value==="multiply"){
+                    p.innerHTML=multiplyNumbers(x,y);
+                }else if(event.target.value==="divide"){
+                    p.innerHTML=divideNumbers(x,y);
+                }
+            };
+        });
+        
+        document.addEventListener("DOMContentLoaded", function(){
+            document.addEventListener('keydown', function(event) {
+                let x=parseFloat(document.querySelector("#num1").value);
+                let y=parseFloat(document.querySelector("#num2").value);
+                if(event.key === "+"){    
+                    document.getElementById("result").innerHTML=addNumbers(x,y);
+                }else if(event.key === "-"){
+                    document.getElementById("result").innerHTML=subtractNumbers(x,y);
+                }else if(event.key === "*"){
+                    document.getElementById("result").innerHTML=multiplyNumbers(x,y);
+                }else if(event.key === "/"){
+                    document.getElementById("result").innerHTML=divideNumbers(x,y);
+                }
+            });
+        });
+        
+        
+
+    </script>
+</body>
+</html>

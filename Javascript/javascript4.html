@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If else and switch statement</title>
+</head>
+<body>
+    <h1>JavaScript Basics - If else and switch statement</h1>
+    <label for="ageInput">Enter your age:</label>
+    <input type="number" id="ageInput"  />
+    <button type="button" onclick="checkAge()">Check Age</button>
+
+    <script>
+        let age=9;
+        if(age<18){
+            //-num 17
+            console.log("You are a minor.");
+        }else if(age==18){
+            //18
+            console.log("You are just an adult.");
+        }else{
+            //19+
+            console.log("You are an adult.");
+        }
+
+        let name="123";
+        if(name===123){
+            //string example abc123 and integer example 123
+            //type and value
+            console.log("Hello John!");
+        }else{
+            console.log("You are not John.");
+        }
+
+        
+        function checkAge(){
+            age=parseInt(document.getElementById("ageInput").value);
+            const h1=document.createElement("h1");
+            
+            switch(true){
+            case age>=1 && age<=12:
+                console.log("child");
+                h1.innerText="You are a child";
+                
+                document.body.appendChild(h1);
+                break;
+            case age>=13 && age<=17:
+                console.log("teenager");
+                h1.innerText="You are a teenager";
+                document.body.appendChild(h1);
+                break;
+            case age>=18 && age<30:    
+                console.log("You are adult now");
+                h1.innerText="You are an adult";
+                document.body.appendChild(h1);
+                break;
+            default:
+                h1.innerText="You are an adult";
+                document.body.appendChild(h1);
+                console.log("you are above 30 years old");
+        }
+        }
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Typing Word Mini Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        color: #000;
+        text-align: center;
+        padding: 40px;
+    }
+
+    h1 { color: #00eaff; margin-bottom: 10px; }
+
+    #game-box {
+        max-width: 420px;
+        margin: auto;
+        padding: 20px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,230,255,0.4);
+    }
+
+    #word {
+        font-size: 36px;
+        font-weight: bold;
+        margin: 20px 0;
+        color: #00ffd5;
+        letter-spacing: 2px;
+    }
+
+    input {
+        width: 80%;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
+
+    .stats {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+
+    #feedback {
+        margin-top: 10px;
+        font-size: 22px;
+        height: 28px;
+    }
+    .monster-box {
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Typing Speed Mini Game</h1>
+
+
+<div class="monster-box">
+    <img id="enemy-image" src="image/dragon.png" alt="Monster" width="120">
+    <h3 id="enemy-name"></h3>
+    <div>
+        <div>Health: <span id="enemy-health"></span></div>
+        <div style="width:260px;height:14px;background:#111;border:1px solid #00eaff;border-radius:8px;overflow:hidden;margin-top:6px;display:inline-block">
+            <div id="enemy-health-bar" style="height:100%;width:100%;background:linear-gradient(90deg,#00ffd5,#00eaff)"></div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            const hpText = document.getElementById('enemy-health');
+            const bar = document.getElementById('enemy-health-bar');
+            let maxHP = null;
+
+            function updateBar() {
+                const val = parseInt(hpText.textContent, 10);
+                if (isNaN(val)) return;
+                if (maxHP === null) maxHP = val;
+                const pct = Math.max(0, Math.min(100, Math.round((val / maxHP) * 100)));
+                bar.style.width = pct + '%';
+            }
+
+            const obs = new MutationObserver(updateBar);
+            obs.observe(hpText, { childList: true, characterData: true, subtree: true });
+            updateBar();
+        })();
+    </script>
+</div>
+
+<div id="game-box">
+    <div>Type this word:</div>
+    <div id="word">loading...</div>
+
+    <input type="text" id="input" placeholder="Type here..." autofocus>
+
+    <div id="feedback"></div>
+
+    <div class="stats">
+        ⏳ Time: <span id="time">20</span>s  
+        <br>
+        ⭐ Combo: <span id="combo">0</span>
+        <br>
+        player health: <span id="player-health">100</span>
+    </div>
+</div>
+
+<script>
+    const monster={
+        name:"Dragon",
+        image:"image/dragon.png",
+        health:200,
+        time:10,
+        attack:30,
+    }
+
+
+    const words = [
+        "apple", "banana", "cat", "dog", "school",
+        "coding", "javascript", "react", "game",
+        "mouse", "keyboard", "happy", "world",
+        "rainbow", "sunlight", "water", "phone"
+    ];
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("enemy-name").textContent = monster.name;
+        document.getElementById("enemy-health").textContent = monster.health;
+        document.getElementById("enemy-image").src = monster.image;
+    });
+
+
+    let score = 0;
+    let time = monster.time;
+    let currentWord = "";
+    let combo=0;
+    let totalUsetime=0;
+
+    const wordEl = document.getElementById("word");
+    const inputEl = document.getElementById("input");
+    const timeEl = document.getElementById("time");
+    const comboEl = document.getElementById("combo");
+    const feedbackEl = document.getElementById("feedback");
+    const playerHealthEl = document.getElementById("player-health");
+
+    function pickWord() {
+        currentWord = words[Math.floor(Math.random() * words.length)];
+        wordEl.textContent = currentWord;
+    }
+
+
+    function attackMonster() {
+        let damage = 10 + combo * 2;
+        monster.health -= damage;
+        document.getElementById("enemy-health").textContent = monster.health;
+        feedbackEl.textContent = `Dealt ${damage} damage!`;
+        if (monster.health <= 0) {
+            feedbackEl.textContent = "Monster defeated!";
+            inputEl.disabled = true;
+            clearInterval(timer);
+        }
+    }
+
+    function startGame() {
+        pickWord();
+
+        const timer = setInterval(() => {
+            time--;
+            timeEl.textContent = time;
+
+            if (time <= 0) {
+                /*clearInterval(timer);
+                inputEl.disabled = true;
+                wordEl.textContent = "GAME OVER!";
+                feedbackEl.textContent = `Final Score: ${score}`; */
+                // Monster attacks player
+                clearInterval(timer);
+                playerHealthEl.textContent = parseInt(playerHealthEl.textContent) - monster.attack;
+                if (parseInt(playerHealthEl.textContent) <= 0) {
+                    inputEl.disabled = true;
+                    wordEl.textContent = "GAME OVER!";
+                    feedbackEl.textContent = `You were defeated by the monster!`;
+                    clearInterval(timer);
+                } else {
+                    // Reset for next round
+                    time = monster.time;
+                    timeEl.textContent = time;
+                    feedbackEl.textContent = `The monster attacked you for ${monster.attack} damage! Type to attack back!`;
+                    combo=0;
+                    pickWord();
+                    startGame();
+                }
+                
+            }
+            totalUsetime+=1;
+        }, 1000);
+    }
+
+
+    inputEl.addEventListener("input", () => {
+        if (inputEl.value.toLowerCase() === currentWord.toLowerCase()) {
+            combo++;
+            attackMonster();
+            feedbackEl.style.color = "#00ff9d";
+            feedbackEl.textContent = "Correct!";
+            inputEl.value = "";
+            pickWord();
+        } else {
+            feedbackEl.style.color = "#ff5e5e";
+            feedbackEl.textContent = "Typing...";
+            
+        }
+        comboEl.textContent = combo;
+    });
+
+    startGame();
+</script>
+
+</body>
+</html>

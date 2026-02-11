@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>multiply List</title>
+</head>
+<body>
+    <style>
+        #multiplyDisplay{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        
+    </style>
+    <h1>Multiply List</h1>
+    <p>Welcome to the multiply list page!</p>
+
+    <div id="multiplyDisplay">
+        
+    </div>
+
+    <script>
+        const multiplyDisplay=document.getElementById("multiplyDisplay");
+        
+        for(let i=1;i<=25;i++){
+            const div=document.createElement("div");
+            div.innerHTML+="<h2>Multiplication Table of "+i+"</h2>";
+
+            for(let j=1;j<=12;j++){
+                div.innerHTML+=""+i+" x "+j+" = "+(i*j)+"<br>";
+            }
+            multiplyDisplay.appendChild(div);
+        }
+      
+    </script>
+
+    
+</body>
+</html>

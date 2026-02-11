@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>我的 Neon 个人网页</title>
+  <style>
+    /* ---------- Reset & Layout ---------- */
+    :root{
+      --bg:#0b0f14;
+      --card:#0f1720;
+      --glass: rgba(255,255,255,0.04);
+      --accent: #00e6ff;
+      --accent-2: #ff44d0;
+      --text:#e6eef6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #02040a 0%, #071022 100%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .wrap{
+      width:100%;
+      max-width:960px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items: start;
+      margin:0 auto;
+    }
+
+    /* ---------- Neon Title ---------- */
+    .neon-title{
+      font-size: clamp(28px, 6vw, 56px);
+      font-weight:800;
+      letter-spacing: 0.02em;
+      line-height:1.05;
+      margin-bottom:18px;
+      display:inline-block;
+      color: #fff;
+      position:relative;
+      text-transform:uppercase;
+      /* gradient fill */
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      /* base glow */
+      text-shadow:
+        0 0 6px rgba(0,230,255,0.35),
+        0 0 18px rgba(255,68,208,0.08);
+      /* neon flicker animation */
+      animation: neon-flicker 3s infinite;
+    }
+
+    /* slight rainbow shift */
+    .neon-sub{
+      display:block;
+      font-size: clamp(14px, 2.6vw, 18px);
+      font-weight:600;
+      margin-top:10px;
+      opacity:0.9;
+      background: linear-gradient(90deg, rgba(0,230,255,0.95), rgba(255,68,208,0.95));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 0 0 10px rgba(0,230,255,0.14);
+      animation: hue-shift 6s linear infinite;
+    }
+
+    @keyframes neon-flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        filter: drop-shadow(0 0 12px rgba(0,230,255,0.6)) drop-shadow(0 0 30px rgba(255,68,208,0.12));
+        opacity: 1;
+        transform: translateY(0);
+      }
+      20%, 24%, 55% {
+        filter: drop-shadow(0 0 4px rgba(0,230,255,0.25));
+        opacity: .85;
+        transform: translateY(-2px);
+      }
+    }
+
+    @keyframes hue-shift {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(30deg); }
+      100% { filter: hue-rotate(0deg); }
+    }
+
+    /* ---------- Left content ---------- */
+    .left {
+      padding:26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;
+      box-shadow: 0 8px 30px rgba(2,6,12,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .lead {
+      font-size:16px;
+      color: #cfefff;
+      margin-bottom:16px;
+      opacity:0.95;
+    }
+    .code-sample {
+      background: rgba(0,0,0,0.25);
+      border-radius:10px;
+      padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;
+      color:#dff8ff;
+      overflow:auto;
+      max-height:280px;
+      line-height:1.6;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .hint {
+      margin-top:12px;
+      font-size:13px;
+      opacity:0.85;
+    }
+
+    /* ---------- Profile Card (right) ---------- */
+    .card {
+      padding:20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      position:relative;
+      overflow:hidden;
+    }
+    .profile {
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .avatar {
+      width:96px;
+      height:96px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 24px rgba(0,230,255,0.05);
+    }
+    .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .p-info h3 { margin-bottom:6px; font-size:18px; letter-spacing:0.01em; }
+    .p-info p { font-size:13px; opacity:.9; }
+
+    .badges {
+      margin-top:14px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .badge {
+      padding:8px 10px;
+      background: linear-gradient(90deg, rgba(0,230,255,0.12), rgba(255,68,208,0.06));
+      border-radius:999px;
+      font-size:12px;
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,0.02);
+      cursor:default;
+    }
+
+    .actions{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+    }
+    .btn{
+      padding:10px 14px;
+      border-radius:10px;
+      border: none;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+      transition: transform .12s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+    .btn:active{ transform: translateY(1px) }
+
+    .btn-primary{
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color:#031018;
+    }
+    .btn-ghost{
+      background: transparent;
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(4px);
+    }
+
+    .footer-note{
+      margin-top:14px;
+      font-size:12px;
+      opacity:0.8;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:880px){
+      .wrap{ grid-template-columns: 1fr; }
+      .card { order:-1; margin-bottom:12px; }
+    }
+
+    /* ---------- Light theme modifier (JS toggles .light on body) ---------- */
+    body.light{
+      --bg: #f7fbff;
+      --card: #ffffff;
+      --glass: rgba(0,0,0,0.02);
+      --accent: #1e90ff;
+      --accent-2: #9b4dff;
+      --text: #07122a;
+      background: linear-gradient(180deg,#f5f9ff, #eaf2ff 100%);
+      color:var(--text);
+    }
+    body.light .card, body.light .left {
+      box-shadow: 0 8px 30px rgba(6,20,40,0.04);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- LEFT: title + explanation + code snippet -->
+    <section class="left">
+      <h1 class="neon-title">Synergy<span style="opacity:.8"> <span class="neon-sub">College</span></span></h1>
+
+      <p class="lead">欢迎来到「Neon 个人网页」示例。在本页你会学到：发光标题（CSS text-shadow）、简单动效与按钮交互（JavaScript）。点击右侧按钮体验互动。</p>
+
+      <div class="code-sample" id="codeSample" aria-hidden="false">
+<pre>
+// 快速示例：控制标题发光（仅展示）
+.neon-title {
+  background: linear-gradient(90deg, #00e6ff, #ff44d0);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0,230,255,0.6);
+  animation: neon-flicker 3s infinite;
+}
+</pre>
+      </div>
+
+      <p class="hint">提示：替换标题文字、加入你的照片并修改简介，让这个页面更像你自己。</p>
+    </section>
+
+    <!-- RIGHT: profile card with buttons -->
+    <aside class="card">
+      <div class="profile">
+        <div class="avatar" id="avatar">
+          <!-- placeholder image from data URL; replace src with your image -->
+          <img id="avatarImg" src="data:image/svg+xml;utf8,
+            <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'>
+              <rect width='100%' height='100%' fill='%23011014'/>
+              <text x='50%' y='50%' font-size='40' fill='%2300e6ff' text-anchor='middle' dominant-baseline='middle' font-family='Arial'>You</text>
+            </svg>" alt="Avatar">
+        </div>
+        <div class="p-info">
+          <h3 id="nameText">你的名字</h3>
+          <p id="bioText">更新了简介</p>
+
+          <div class="badges">
+            <div class="badge">HTML</div>
+            <div class="badge">CSS</div>
+            <div class="badge">JavaScript</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="welcomeBtn">Show Welcome</button>
+        <button class="btn btn-ghost" id="themeBtn">Toggle Theme</button>
+      </div>
+
+      <p class="footer-note">想自定义：把头像换成自己的照片（把图片文件拖到头像上），把名字与简介改成你喜欢的内容。</p>
+    </aside>
+  </div>
+
+  <script>
+    // ---------- Basic interactivity ----------
+    const welcomeBtn = document.getElementById('welcomeBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const avatar = document.getElementById('avatar');
+    const avatarImg = document.getElementById('avatarImg');
+    const nameText = document.getElementById('nameText');
+    const bioText = document.getElementById('bioText');
+
+    // Show a simple typed-style welcome message
+    welcomeBtn.addEventListener('click', () => {
+      const name = nameText.textContent.trim() || '朋友';
+      // a playful typed message
+      const messages = [
+        `嗨 ${name} 👋，欢迎来到你的个人网页！`,
+        `你刚刚用 CSS 做出了 Neon 效果 ✨`,
+        `继续学习：增加按钮、表单或小游戏吧！`
+      ];
+      // show messages sequentially with small delay
+      let i = 0;
+      function showNext(){
+        if(i >= messages.length) return;
+        alert(messages[i]);
+        i++;
+        setTimeout(showNext, 200); // short delay before next alert
+      }
+      showNext();
+    });
+
+    // Toggle light/dark theme
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+
+    // Allow drag-and-drop avatar image replacement (simple UX)
+    avatar.addEventListener('dragover', (e) => { e.preventDefault(); avatar.style.opacity = 0.85; });
+    avatar.addEventListener('dragleave', (e) => { avatar.style.opacity = 1; });
+    avatar.addEventListener('drop', (e) => {
+      e.preventDefault();
+      avatar.style.opacity = 1;
+      const f = e.dataTransfer.files && e.dataTransfer.files[0];
+      if(!f) return alert('请选择图片文件并拖到头像上。');
+      if(!f.type.startsWith('image/')) return alert('只支持图片文件。');
+      const reader = new FileReader();
+      reader.onload = () => avatarImg.src = reader.result;
+      reader.readAsDataURL(f);
+    });
+
+    // Small interactive demo: click name to quickly edit
+    nameText.addEventListener('click', () => {
+      const newName = prompt('输入你的名字（例如：小明）', nameText.textContent);
+      if(newName !== null) nameText.textContent = newName.trim() || '你的名字';
+    });
+    bioText.addEventListener('click', () => {
+      const newBio = prompt('修改简介（短句）', bioText.textContent);
+      if(newBio !== null) bioText.textContent = newBio.trim() || '更新了简介';
+    });
+
+  </script>
+</body>
+</html>

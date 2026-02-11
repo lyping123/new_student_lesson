@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: 'Great Vibes', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        #header {
+            background-color: #004d90;
+            color: white;
+            padding: 30px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .side-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .side-menu li {
+            margin-right: 20px;
+        }
+        .side-menu li:hover {
+            text-decoration: underline;
+            color: red;
+            cursor: pointer;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #footer {
+            background-color: #004d90;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            bottom: 0;
+        }
+       
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-image: linear-gradient(to right, #48f8f8, #2980b9);
+            border-radius: 8px;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .image {
+            flex: 1 1 calc(33.333% - 40px);
+            border: 3px solid #0f5796b7;
+            border-radius: 3px;
+            box-sizing: border-box;
+            width: 300;
+            height: 200;
+        }
+        .image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 3px;
+           
+        }
+
+        #animation-section{
+            height: 500px;
+            background-color: #2980b9;
+            margin: 15px 30px;
+            padding: 10px;
+            
+        }
+        #animation-section h2{
+            color: white;
+            text-align: center;
+            padding-top: 20px;
+        }
+        #animation-section .animation-container{
+            width: 800px;
+            height: 400px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #0f5796b7;
+            border-radius: 10px;
+            background-color: white;
+        }
+        #animation-section .animation-container img{
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            left: 30%;
+            animation: infinite rotate 5s linear;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .option-music nav{
+            display: flex;
+            justify-content: space-around;
+        }
+        .option-music nav ul{
+            display: flex;
+            list-style-type: none;
+            margin: 10px;
+            gap: 15px;
+        }
+        .option-music li button{
+            border-radius: 5px;
+            padding: 10px 15px;
+            border: none;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+
+        .option-music li button[active]{
+            transform: scale(0.95);
+            color: white;
+            background-color: rgb(30, 248, 255);
+        }
+        .option-music li button:hover{
+            color: white;
+            background-color: rgb(28, 16, 252);
+            cursor: pointer;
+        }
+
+
+        #about .container-grid{
+            display: grid;
+            grid-template-areas: 
+            "opening location"
+            "show-detail show-detail";
+            grid-template-columns: 1fr 3fr;
+            gap: 10px;
+            padding: 20px;
+        }
+        #about .container-grid div{
+            padding: 20px;
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            border: 2px solid #0f5796b7;
+            
+        }
+        #about .open-time{
+            grid-area: opening;
+            text-align: center;
+        }
+        #about .location{
+            grid-area: location;
+            text-align: center;
+        }
+        #about .show-detail{
+            grid-area: show-detail;
+            text-align: center;
+            
+        }
+
+        .show-detail .price-list{
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            text-align: left;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .show-detail .pricing{
+            background: linear-gradient(135deg, #0288d1 0%, #0277bd 50%, #01579b 100%);
+            border: 3px dashed #fff;
+            border-radius: 8px;
+            padding: 25px;
+            color: white;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .show-detail .pricing::before{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: #f0f8ff;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .show-detail .pricing::after{
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: #f0f8ff;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .show-detail .pricing p{
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 15px 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .show-detail .pricing ul{
+            margin: 0 0 0 45px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .show-detail .pricing li{
+            font-size: 14px;
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .show-detail .pricing li::before{
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4dd0e1;
+            font-weight: bold;
+        }
+
+        #ticket .container{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex:2;
+            
+        }
+    
+    </style>
+    <section id="header">
+        <nav>
+            <ul class="side-menu">
+                <li><a href="main.html">Aquarium</a></li>
+                <li><a href="main.html">Home</a></li>
+                <li><a href="main.html#image-gallery">Image gallery</a></li>
+                <li><a href="main.html#music">Music</a></li>
+                <li><a href="main.html#about">About Us</a></li>
+            </ul>
+            <div id="user-info">
+                <a href="login.html">Login</a> |
+                <a href="register.html">Register</a>
+            </div>
+        </nav>
+    </section>
+
+    <section id="ticket">
+        <div class="container">
+            <div class="qr-image">
+                <img src="" alt="QR Code for Ticket" width="200" height="200">
+            </div>
+            <div class="show-detail">
+                <h2 id="ticket-type"></h2>
+                <p id="ticket-price"></p>
+                <ul id="ticket-benefits">
+                    
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="footer">
+        <footer>
+            &copy; 2024 Aquarium. All rights reserved.
+        </footer>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const getTicketDetail=localStorage.getItem("ticketinfo");
+            if(getTicketDetail){
+                const ticketDetail=JSON.parse(getTicketDetail);
+                document.getElementById("ticket-type").innerText=ticketDetail.type;
+                document.getElementById("ticket-price").innerText="Price: $"+ticketDetail.price;
+                const benefitsList=document.getElementById("ticket-benefits");
+                ticketDetail.benefits.forEach(benefit=>{
+                    const li=document.createElement("li");
+                    li.innerText=benefit;
+                    benefitsList.appendChild(li);
+                });
+            }
+        });
+
+        
+    </script>
+    
+</body>
+</html>

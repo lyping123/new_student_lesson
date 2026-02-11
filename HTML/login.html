@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container{
+            width: 300px;
+            margin: 10% auto;
+            padding: 20px;
+            background-color: red;
+            border: 5px double #817df4;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        div input{
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .alert-box{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 35%;
+            width: 300px;
+            margin: 20px auto;
+            padding: 15px;
+            border: 2px solid red;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            animation: slideDown 0.5s ease-out;
+            
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+    </style>
+
+    <div class="container">
+        <h1>login</h1>
+        <label for="username">Username:</label>
+        <br>
+        <input type="text" id="username" name="username" placeholder="eg abcadmin">
+        <br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="password" id="password" name="password" onmouseenter="showhiddenpassword()" onmouseout="showhiddenpassword()" placeholder="eg abc123">
+        <br>
+        <br>
+        <button type="button">Login</button>
+        <br>
+        <a href="register.html"> don't have an account? click me to register</a>
+    </div>
+
+    <div class="alert-box">
+        <!-- Alert messages will be displayed here -->
+        <h3 class="alert-title">This is alert title</h3>
+        <p class="alert-message">this is alert message</p>
+    </div>
+
+    <script>
+        const button=document.querySelector("button");
+        button.addEventListener("click",()=>{
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            if(username === localStorage.getItem("username") && password === localStorage.getItem("password")){
+                sessionStorage.setItem("username", username);
+                /*showalertbox('success mes`sage','login successful','green');
+                setTimeout(() => {
+                    window.location.href='main.html';
+                }, 2000);*/
+                alert('login successful');
+                // Redirect to another page or perform other actions
+            } else {
+                showalertbox('fail message','invalid username or password','red');
+            }
+        });
+
+        function showhiddenpassword(){
+            const passwordInput = document.getElementById("password");
+            if(passwordInput.type === "password"){
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+
+        function showalertbox(title,message,color){
+            const alertBox = document.querySelector(".alert-box");
+            const alertTitle = document.querySelector(".alert-title");
+            const alertMessage = document.querySelector(".alert-message");
+            alertBox.style.backgroundColor = color;
+            
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+
+            alertBox.style.display = "block";
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 2000);
+        }
+
+        
+
+
+
+
+    </script>
+
+    
+</body>
+</html>

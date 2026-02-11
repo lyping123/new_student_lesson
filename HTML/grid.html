@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: 40% 10% 50%;
+        }
+
+        .container2{
+            display:grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .container2 div:nth-child(1){
+            grid-column: 1/6
+        }
+        .container2 div:nth-child(7){
+            grid-column: 1/4;
+        }
+        .container2 div:nth-child(8){
+            grid-column: 4/6;
+        }
+        .container2 div:nth-child(9){
+            grid-column: 1/6;
+        } 
+    </style>
+
+    <div class="container">
+        <div style="background-color: lightblue; border: 2px solid black;">Item 1</div>
+        <div style="background-color: lightgreen; border: 2px solid black;">Item 2 </div>
+        <div style="background-color: lightcoral; border: 2px solid black;">Item 3</div>
+        <div style="background-color: lightgoldenrodyellow; border: 2px solid black;">Item 4</div>
+        <div style="background-color: lightpink; border: 2px solid black;">Item 5</div>
+        <div style="background-color: lightgray; border: 2px solid black;">Item 6</div>
+    </div>
+    <br>
+
+    <div class="container2">
+        <div style="background-color: lightblue; border: 2px solid black;">
+           <h1>This is Grid header</h1>
+        </div>
+        <div style="background-color: lightgreen; border: 2px solid black;">
+            <img src="budget.png" height="150px" alt="Placeholder Image">
+        </div>
+        <div style="background-color: lightcoral; border: 2px solid black;">
+            <img src="budget.png" height="150px" alt="Placeholder Image">
+        </div>
+        <div style="background-color: lightgoldenrodyellow; border: 2px solid black;">
+            <img src="budget.png" height="150px" alt="Placeholder Image">
+        </div>
+        <div style="background-color: lightpink; border: 2px solid black;">
+            <img src="budget.png" height="150px" alt="Placeholder Image">
+        </div>
+        <div style="background-color: lightgray; border: 2px solid black;">
+            <img src="budget.png" height="150px" alt="Placeholder Image">
+        </div>
+        <div style="background-color: rgb(148, 2, 112); border: 2px solid black;">
+            <p>this is my image photo and this is a calculator image</p>
+        </div>
+        <div style="background-color: rgb(39, 255, 39); border: 2px solid black;">
+            <p>contact us at : email@gmail.com</p>
+        </div>
+        <div style="background-color: rgb(255, 39, 39); border: 2px solid black;">
+            <p>this is footer section</p>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container{
+            display: flex;
+        }
+        .container div{
+            height: 100px;
+        }
+        .div1{
+            background-color: red;
+            flex: 1;
+        }
+        .div2{
+            background-color: green;
+            flex: 1;
+        }
+        .div3{
+            background-color: yellow;
+            flex: 1;
+        }
+
+        .div1 h1, .div2 h1{
+            text-align: center;
+            color: white;
+            margin: 0;
+            line-height: 100px;
+            position: absolute;
+        }
+    </style>
+    <h1>JavaScript Basics</h1>
+
+    <div class="container">
+        <div class="div1">
+            <h1>50</h1>
+        </div>
+        <div class="div2">
+            <h1>50</h1>
+        </div>
+       
+    </div>
+    
+    
+    <button onclick="addRedDiv()">Add Red Div</button>
+    <button style="float: right;" onclick="addGreenDiv()">Add Green Div</button>
+    
+    
+    <script>
+        //part1
+        let message = "Hello, World!";
+        const data1=123;
+        console.log(message);
+        
+
+        //part2
+        //Document object model
+        const data="hi this is my new content";
+        function changeContent(){
+            const heading=document.querySelector('h1');
+            heading.style.color='blue';
+            heading.textContent=data;
+        }
+
+        let flexvalueRed=1;
+        const headingRed=document.querySelector('.div1 h1');
+        const headingGreen=document.querySelector('.div2 h1');
+        function addRedDiv(){
+            const divred=document.querySelector('.div1');
+            
+            headingRed.textContent=flexvalueRed/(flexvalueRed+flexvalueGreen)*100;
+            headingGreen.textContent=flexvalueGreen/(flexvalueRed+flexvalueGreen)*100;
+            flexvalueRed++;
+            //
+            divred.style.flex=flexvalueRed;   
+        }
+        let flexvalueGreen=1;
+        function addGreenDiv(){
+            const divgreen=document.querySelector('.div2');
+            headingGreen.textContent=flexvalueGreen/(flexvalueRed+flexvalueGreen)*100;
+            headingRed.textContent=flexvalueRed/(flexvalueRed+flexvalueGreen)*100;
+            flexvalueGreen++;
+            //
+            divgreen.style.flex=flexvalueGreen;
+        }
+
+        document.addEventListener('keydown',function(event){
+            if(event.key==='a'){
+                addRedDiv();
+            }
+            else if(event.key==='l'){
+                addGreenDiv();
+            }
+        });
+
+        
+    </script>
+
+    
+</body>
+</html>
