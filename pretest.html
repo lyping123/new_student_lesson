@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #question1{
+        width: 200px;
+        height: 200px;
+        background-color: red;
+    }
+
+    #question1:hover{
+        transform: translate(100%);
+        transition: 2s;
+    }
+
+    #question3{
+        width: 200px;
+        height: 200px;
+        background-color: blue;
+    }
+
+    #question5{
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+       
+    }
+    #question5 :nth-child(1){
+        background-color: blue;
+    }
+    #question5 :nth-child(5){
+        background-color: red;
+    }
+    #question5 :nth-child(9){
+        background-color: green;
+    }
+</style>
+<body>
+    <h1>Question 1:</h1>
+    <div id="question1">
+
+    </div>
+
+    <h1>Question 2:</h1>
+    <div id="question2">
+        <label>1</label>
+        <br>
+        <button>Multiply</button>
+    </div>
+
+    <h1>Question 3:</h1>
+    <div id="question3">
+        
+    </div>
+
+    <h1>Question 4:</h1>
+    <div id="question4">
+        <input type="text" id="textInput" placeholder="Type something...">
+       
+        <p id="displayText"></p>
+
+    </div>
+
+    <h1>Question 5:</h1>
+    <div id="question5">
+        <div>1</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div>2</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div>3</div>
+
+        
+    </div>
+
+    <script>
+        //question 2
+        const button = document.querySelector("#question2 button");
+        const label = document.querySelector("#question2 label");
+
+        button.addEventListener("click", () => {
+            let currentValue = parseInt(label.textContent); //1
+            label.textContent = currentValue * 2;
+        });
+
+        //question 3
+        document.addEventListener("keypress",function(event){
+            
+            const box = document.getElementById("question3");
+            if(event.key === "r"){
+                box.style.backgroundColor = "red";
+            } else if(event.key === "g"){
+                box.style.backgroundColor = "green";
+            } else if(event.key === "b"){
+                box.style.backgroundColor = "blue";
+            }else if(event.key === "y"){
+                box.style.backgroundColor = "yellow";
+            }else if(event.key === "o"){
+                box.style.backgroundColor = "orange";
+            }else if(event.key === "p"){
+                box.style.backgroundColor = "purple";
+            }else if(event.key === "v"){
+                box.style.backgroundColor = "violet";
+            }
+        });
+
+        //question 4       
+        const textInput = document.getElementById("textInput");
+        const displayText = document.getElementById("displayText");
+
+        textInput.addEventListener("input", function() {
+            displayText.textContent = textInput.value;
+        });
+
+        //question 5
+
+     
+
+    </script>
+    
+</body>
+</html>
