@@ -1,4 +1,6 @@
 <?php 
+    include "db.php";
+
     "Hello World <br>";
     
     $name="john";
@@ -9,12 +11,17 @@
     "My name is $name, I am $age years old and I am a $gender.";
 
     if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $sername=$_POST["username"];
+        $username=$_POST["username"];
         $password=$_POST["password"];
-        if($username=="admin" &&  $password=="123"){
-            echo "Login successful!";
+
+        $qry=$conn->prepare("SELECT * FROM users WHERE username=? AND password=?");
+        $qry->bind_param("ss",$username,$password);
+        $qry->execute();
+        $result=$qry->get_result();
+        if($result->num_rows>0){
+            echo "Login successful";
         }else{
-            echo "Invalid username or password.";
+            echo "Login failed";
         }
     }
     

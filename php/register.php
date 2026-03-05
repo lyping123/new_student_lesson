@@ -25,11 +25,9 @@
                 </div>
                 <a href="index.php">Login page</a><br>
                  <button type="submit" name="register">register</button>
-            </form>
-           
-            
+            </form>      
         </div>
     </div>
-
+    
 </body>
 </html>
