@@ -13,15 +13,19 @@
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $username=$_POST["username"];
         $password=$_POST["password"];
-
-        $qry=$conn->prepare("SELECT * FROM users WHERE username=? AND password=?");
-        $qry->bind_param("ss",$username,$password);
+        
+        $qry=$conn->prepare("SELECT * FROM users WHERE username=?");
+        $qry->bind_param("s",$username);
         $qry->execute();
         $result=$qry->get_result();
         if($result->num_rows>0){
-            echo "Login successful";
-        }else{
-            echo "Login failed";
+            $user = $result->fetch_assoc();
+            
+            if (password_verify($password, $user['password'])) {
+                echo "Login successful";
+            } else {
+                echo "Login failed";
+            }
         }
     }
     
