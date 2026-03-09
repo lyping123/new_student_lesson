@@ -22,7 +22,10 @@
             $user = $result->fetch_assoc();
             
             if (password_verify($password, $user['password'])) {
-                echo "Login successful";
+                $_SESSION["username"]=$user["username"];
+                echo "<script>alert('Login successful');
+                window.location.href='main.php';
+                </script>";
             } else {
                 echo "Login failed";
             }
