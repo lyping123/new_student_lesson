@@ -69,6 +69,30 @@ body{
     align-items: center;
 }
 
-.drowpdown{
-    position: relative;
+footer{
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+}
+
+.submenu{
+    position: absolute;
+    top: 50px;
+    right: 5px;
+    background-color: #333;
+    border-radius: 5px;
+    display: none;
+}
+.submenu.show{
+    display: block;
+}
+.submenu .dropdown{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
 }

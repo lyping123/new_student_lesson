@@ -19,7 +19,13 @@
             <li><a href="#">Cart</a></li>
             <li>
                 <?php if(isset($_SESSION["username"]) && $_SESSION["username"]!="") {?>
-                    <a href="#"><?=$_SESSION['username']?></a>
+                <a href="#"><?=$_SESSION['username']?></a>
+                <div class="submenu">
+                    <ul class="dropdown">
+                        <li><a href="profile.php">Profile</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </div>
                 <?php }else{ ?>
                     <a href="index.php">Login</a>
                     <a href="register.php">Register</a>
