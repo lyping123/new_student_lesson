@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>赛车晋级赛 - 8进4</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: white; text-align: center; }    
+        #finish-line { position: absolute; left: 750px; height: 100%; width: 10px; background: repeating-linear-gradient(0deg, #fff, #fff 10px, #000 10px, #000 20px); }
+        #ui-layer { margin-top: 10px; }
+        #leaderboard { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; background: rgba(0,0,0,0.9); padding: 20px; border: 2px solid yellow; z-index: 100; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: yellow; border: none; font-weight: bold; }
+        .eliminated { opacity: 0.2; }
+    </style>
+</head>
+<body>
+
+    <h1>赛车大奖赛 - 第 <span id="roundNum">1</span> 轮</h1>
+    <div id="track">
+        <div id="finish-line"></div>
+        <div id="car0" class="car" style="top: 15px; background: #ff4d4d;">1</div>
+        <div id="car1" class="car" style="top: 55px; background: #4d79ff;">2</div>
+        <div id="car2" class="car" style="top: 95px; background: #4dff4d;">3</div>
+        <div id="car3" class="car" style="top: 135px; background: #ffff4d;">4</div>
+        <div id="car4" class="car" style="top: 175px; background: #ff944d;">5</div>
+        <div id="car5" class="car" style="top: 215px; background: #b34dff;">6</div>
+        <div id="car6" class="car" style="top: 255px; background: #4dffff;">7</div>
+        <div id="car7" class="car" style="top: 295px; background: #ff4dff;">8</div>
+    </div>
+
+    <div id="ui-layer">
+        <button id="actionBtn" onclick="startRace()">开始第一轮 (8辆车)</button>
+    </div>
+
+    <div id="leaderboard">
+        <h2 id="resultTitle">比赛结果</h2>
+        <ol id="rankList" style="text-align: left;"></ol>
+        <p id="promoText" style="color: yellow; font-weight: bold;"></p>
+        <button onclick="nextStep()">确定</button>
+    </div>
+
+    <script>
+        let allCars = [];
+        let racingCars = [];
+        let currentRound = 1;
+        const trackLength = 750;
+
+        // 初始化所有赛车
+        function initGame() {
+            for (let i = 0; i < 8; i++) {
+                allCars.push({
+                    id: i,
+                    element: document.getElementById('car' + i),
+                    pos: 0,
+                    speed: 0,
+                    finished: false,
+                    finishTime: 0
+                });
+            }
+            racingCars = [...allCars];
+        }
+
+        initGame();
+
+        function startRace() {
+            document.getElementById('leaderboard').style.display = 'none';
+            document.getElementById('actionBtn').disabled = true;
+
+            // 重置当前参赛车辆状态
+            racingCars.forEach(car => {
+                car.pos = 0;
+                car.finished = false;
+                car.speed = Math.random() * 2 + 2; // 随机速度 [cite: 1]
+                car.element.style.left = '0px';
+            });
+
+            requestAnimationFrame(raceLoop);
+        }
+
+        function raceLoop() {
+            let stillRacing = false;
+            racingCars.forEach(car => {
+                if (!car.finished) {
+                    car.pos += car.speed;
+                    car.element.style.left = car.pos + 'px';
+                    
+                    if (car.pos >= trackLength) {
+                        car.finished = true;
+                        car.finishTime = performance.now(); // 记录计时表 
+                    }
+                    stillRacing = true;
+                }
+            });
+
+            if (stillRacing) {
+                requestAnimationFrame(raceLoop);
+            } else {
+                processResults();
+            }
+        }
+
+        function processResults() {
+            // 根据计时排序 
+            racingCars.sort((a, b) => a.finishTime - b.finishTime);
+            
+            const list = document.getElementById('rankList');
+            list.innerHTML = "";
+            racingCars.forEach((car, index) => {
+                const color = car.element.style.backgroundColor;
+                list.innerHTML += `<li><span style="color:${color}">██</span> 赛车 ${car.id + 1}</li>`;
+            });
+
+            if (currentRound === 1) {
+                document.getElementById('promoText').innerText = "前4名已晋级下一轮！";
+                // 筛选前4名晋级 
+                const winners = racingCars.slice(0, 4);
+                const eliminated = racingCars.slice(4);
+                
+                eliminated.forEach(car => car.element.classList.add('eliminated'));
+                racingCars = winners; // 下一轮只跑这4辆
+            } else {
+                document.getElementById('promoText').innerText = "决赛结束！冠军产生！";
+            }
+
+            document.getElementById('leaderboard').style.display = 'block';
+        }
+
+        function nextStep() {
+            document.getElementById('leaderboard').style.display = 'none';
+            if (currentRound === 1) {
+                currentRound = 2;
+                document.getElementById('roundNum').innerText = "2 (决赛)";
+                document.getElementById('actionBtn').disabled = false;
+                document.getElementById('actionBtn').innerText = "开始决赛 (4辆车)";
+            } else {
+                location.reload(); // 游戏结束，刷新重来
+            }
+        }
+    </script>
+</body>
+</html>

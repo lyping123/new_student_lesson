@@ -49,6 +49,7 @@
         <h1>Login</h1>
         <div class="card">
             <form action="index.php" method="post">
+
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username">
@@ -58,7 +59,7 @@
                     <input type="password" id="password" name="password">
                 </div>
                 <a href="register.php">did not have account, click me for register</a><br>
-                <button type="submit" name="login">Login</button>
+               <button type="submit" name="login">Login</button>
             </form>
             
         </div>
