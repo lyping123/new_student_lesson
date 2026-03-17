@@ -11,8 +11,23 @@
     "My name is $name, I am $age years old and I am a $gender.";
 
     if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $username=$_POST["username"];
+        $username= $_POST["username"];
         $password=$_POST["password"];
+
+        // $qry="SELECT * FROM users WHERE username='$username' AND password='123'";
+        // $sttr=mysqli_query($conn,$qry);
+        // $num=mysqli_num_rows($sttr);
+        // if($num>0){
+        //     $_SESSION["username"]=$username;
+        //     echo "<script>alert('Login successful');
+        //     window.location.href='main.php';
+        //     </script>";
+        // } else {
+        //     echo "<script>alert('Login failed');
+        //     window.location.href='index.php';
+        //     </script>";
+        // }
+
         
         $qry=$conn->prepare("SELECT * FROM users WHERE username=?");
         $qry->bind_param("s",$username);
@@ -30,10 +45,7 @@
                 echo "Login failed";
             }
         }
-    }
-    
-    
-    
+    }  
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +57,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
         <h1>Login</h1>
         <div class="card">
@@ -64,6 +77,5 @@
             
         </div>
     </div>
-    
 </body>
 </html>

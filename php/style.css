@@ -6,7 +6,6 @@ body{
 .container{
     width: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -75,7 +74,7 @@ footer{
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
+   
     bottom: 0;
 }
 
@@ -180,7 +179,7 @@ footer{
     display: none;
 }
 
-.profile-card .btn {
+.profile-card .btn.btn-primary {
     width: 100%;
     border: none;
     border-radius: 10px;
@@ -194,4 +193,132 @@ footer{
 
 .profile-card .btn:hover {
     background: #1b6fdc;
+}
+
+
+.product-container{
+    max-width:1200px;
+    margin:auto;
+    margin-top:20px;
+}
+
+.product-container .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.product-container .title{
+    font-size:28px;
+    font-weight:600;
+    color:#333;
+}
+
+.product-container .btn-add{
+    padding:10px 18px;
+    background:#4f46e5;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.product-container .btn-add:hover{
+    background:#3730a3;
+}
+
+.product-container .card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.product-container table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.product-container thead{
+    background:#f4f6fb;
+}
+
+.product-container th{
+    text-align:left;
+    padding:14px;
+    font-weight:500;
+    color:#555;
+}
+
+.product-container td{
+    padding:14px;
+    border-top:1px solid #eee;
+    color:#444;
+}
+
+.product-container tr:hover{
+    background:#f9fbff;
+}
+
+.product-container .price{
+    font-weight:500;
+    color:#16a34a;
+}
+
+.product-container .badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:500;
+}
+
+.product-container .instock{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.product-container .lowstock{
+    background:#fef9c3;
+    color:#ca8a04;
+}
+
+.product-container .outstock{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.product-container .search-box{
+    margin-bottom:20px;
+}
+
+.product-container .search-box input{
+    width:300px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.btn-secondary{
+    width: 100%;
+    padding:10px 18px;
+    background:#6b7280;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+@media(max-width:768px){
+
+    .product-container table{
+        font-size:14px;
+    }
+
+    .product-container .search-box input{
+        width:100%;
+    }
+
 }
