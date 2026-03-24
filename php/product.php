@@ -1,6 +1,21 @@
 <?php 
 include('header.php'); 
 
+if(isset($_GET['action']) && $_GET['action']=="delete" && isset($_GET['id'])){
+    $id=$_GET['id'];
+    $qry=$conn->prepare("DELETE FROM products WHERE id=?");
+    $qry->bind_param("i",$id);
+    if($qry->execute()){
+        echo "<script>alert('Product deleted successfully');
+        window.location.href='product.php';
+        </script>";
+    } else {
+        echo "<script>alert('Failed to delete product');
+        window.location.href='product.php';
+        </script>";
+    }
+}
+
 $qry=$conn->prepare("SELECT * FROM products");
 $qry->execute();
 $result=$qry->get_result();
@@ -38,10 +53,10 @@ $result=$qry->get_result();
                     <td><?=$row['price']?></td>
                     <td><?=$row['quantity']?></td>
                     <td><?=$row['date_created']?></td>
-                    <td><?=$row['date_updated']?></td>
+                  
                     <td>
                         <a href="edit_product.php?id=<?=$row['id']?>" class="btn btn-success">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="product.php?action=delete&id=<?=$row['id']?>" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             <?php } ?>
