@@ -16,7 +16,7 @@
         <ul class="nav-links">
             <li><a href="main.php">Home</a></li>
             <li><a href="product.php">Product</a></li>
-            <li><a href="#">Cart</a></li>
+            <li><a href="cartList.php">Cart</a></li>
             <li>
                 <?php if(isset($_SESSION["username"]) && $_SESSION["username"]!="") {?>
                 <a href="#"><?=$_SESSION['username']?></a>

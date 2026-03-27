@@ -16,6 +16,30 @@ if(isset($_GET['action']) && $_GET['action']=="delete" && isset($_GET['id'])){
     }
 }
 
+if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['add_to_cart'])){
+    $productId = (int)$_POST['product_id'];
+    if ($productId > 0) {
+        if (isset($_SESSION['cart'][$productId])) {
+            $_SESSION['cart'][$productId] += 1;
+        } else {
+            $_SESSION['cart'][$productId] = 1;
+        }
+
+        $json=json_encode($_SESSION['cart']);
+        file_put_contents('cart.json', $json);
+
+        echo "<script>alert('Product added to cart');
+        window.location.href='product.php';
+        </script>";
+    } else {
+        echo "<script>alert('Invalid product ID');
+        window.location.href='product.php';
+        </script>";
+    }
+}   
+
+
+
 $qry=$conn->prepare("SELECT * FROM products");
 $qry->execute();
 $result=$qry->get_result();
@@ -25,7 +49,11 @@ $result=$qry->get_result();
 <div class="product-container">
     <div class="header">
         <div class="title">Product List</div>
-        <button onclick="window.location.href='add_product.php'" class="btn-add">+ Add Product</button>
+        <div>
+             <button onclick="window.location.href='add_product.php'" class="btn-add">+ Add Product</button>
+             <a href="cartList.php" class="btn-add">View Cart</a>
+        </div>
+       
     </div>
 
     <div class="card">
@@ -42,6 +70,7 @@ $result=$qry->get_result();
             <th>Price</th>
             <th>Quantity</th>
             <th>Date Created</th>
+            <th>Add cart</th>
             <th>Action</th>
             </tr>
         </thead>
@@ -53,7 +82,12 @@ $result=$qry->get_result();
                     <td><?=$row['price']?></td>
                     <td><?=$row['quantity']?></td>
                     <td><?=$row['date_created']?></td>
-                  
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="product_id" value="<?=$row['id']?>">
+                            <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </td>
                     <td>
                         <a href="edit_product.php?id=<?=$row['id']?>" class="btn btn-success">Edit</a>
                         <a href="product.php?action=delete&id=<?=$row['id']?>" class="btn btn-danger">Delete</a>
