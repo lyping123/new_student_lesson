@@ -396,6 +396,106 @@ footer{
     flex-wrap:wrap;
 }
 
+.checkout-page .checkout-header{
+    margin-bottom:18px;
+}
+
+.checkout-card{
+    background:#ffffff;
+    border:1px solid #e6edf7;
+    border-radius:18px;
+    box-shadow:0 14px 34px rgba(25, 42, 69, 0.1);
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.checkout-section{
+    border:1px solid #e8eef8;
+    border-radius:14px;
+    padding:18px;
+    background:linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.checkout-section h2{
+    margin:0 0 12px;
+    font-size:20px;
+    color:#1f3553;
+}
+
+.receipt-box{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.receipt-id{
+    font-size:26px;
+    font-weight:700;
+    color:#1b6fdc;
+    letter-spacing:0.6px;
+}
+
+.receipt-note{
+    margin:0;
+    color:#5f7086;
+    font-size:14px;
+}
+
+.checkout-summary{
+    margin-top:14px;
+    border-top:1px dashed #d7e3f4;
+    padding-top:12px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    color:#2e425f;
+}
+
+.summary-row.grand{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid #dbe7f8;
+    font-size:17px;
+    color:#193152;
+}
+
+.payment-method-form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.payment-option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border:1px solid #dbe6f6;
+    border-radius:10px;
+    background:#fdfefe;
+    color:#2f425f;
+}
+
+.payment-option input{
+    accent-color:#1b6fdc;
+}
+
+.pay-btn{
+    margin-top:8px;
+    width:100%;
+}
+
+.pay-btn:disabled{
+    opacity:0.55;
+    cursor:not-allowed;
+}
+
 @media(max-width:768px){
 
     .product-container table{
@@ -418,6 +518,14 @@ footer{
 
     .cart-summary{
         justify-content:flex-start;
+    }
+
+    .receipt-id{
+        font-size:22px;
+    }
+
+    .checkout-card{
+        padding:16px;
     }
 
 }

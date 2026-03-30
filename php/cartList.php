@@ -1,6 +1,18 @@
 <?php include('header.php'); ?>
 
 <?php
+
+//method 1
+$randomString=rand(1000000000, 9999999999);
+
+//method 2
+$array=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+for($i=0; $i<10; $i++){
+    shuffle($array);
+    $randomString=implode('', array_slice($array, 0, 10));
+}
+$randomString;
+
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
     $json = file_get_contents('cart.json');
     $cartData = json_decode($json, true);
@@ -42,19 +54,30 @@ if($action==="checkout"){
     $jsonData=json_decode(file_get_contents('cart.json'), true);
     $sqldata=[];
     foreach($jsonData as $p_id => $qty){
-        $sqldata[]=[(int)$_SESSION['user_id'], (int)$p_id];
+        $sqldata[]=[(int)$_SESSION['user_id'], (int)$p_id, (int)$qty];
     }
-    
-    $qry=$conn->prepare("INSERT INTO carts(u_id,p_id) VALUES (?, ?)");
+
+    $array=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+    for($i=0; $i<10; $i++){
+        shuffle($array);
+        $randomString=implode('', array_slice($array, 0, 10));
+    }
+    $qry=$conn->prepare("INSERT INTO cart_id(cart_id) VALUES(?)");
+    $qry->bind_param("s", $randomString);
+    $qry->execute();
+    $lastid=$qry->insert_id;
+
+    $qry=$conn->prepare("INSERT INTO carts(u_id,p_id,cart_id,qty) VALUES (?, ?, ?, ?)");
     foreach($sqldata as $data){
-        $qry->bind_param("ii", $data[0], $data[1]);
+        $qry->bind_param("iisi", $data[0], $data[1], $lastid, $data[2]);
         $qry->execute();
     }
+    
     $_SESSION['cart'] = [];
     file_put_contents('cart.json', json_encode($_SESSION['cart']));
     echo "<script>
         alert('Checkout successful');
-        window.location.href='cartList.php';
+        window.location.href='checkoutList.php?cart_id={$lastid}';
     </script>";
 }
 
