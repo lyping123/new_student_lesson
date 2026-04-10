@@ -104,25 +104,45 @@ if ($result->num_rows === 0) {
 		</div>
 
 		<div class="checkout-section payment-box">
-			<h2>Payment Method</h2>
-			<form class="payment-method-form" action="#" method="post">
+			<h4>Payment Method</h4>
+			<form class="payment-method-form" action="payment.php?cart_id=<?= $cartId ?>" method="post" enctype="multipart/form-data">
+				
+				<input type="hidden" name="payment_amount" value="<?= $grandTotal ?>">
 				<label class="payment-option">
-					<input type="radio" name="payment_method" checked>
-					<span>Credit / Debit Card</span>
-				</label>
-				<label class="payment-option">
-					<input type="radio" name="payment_method">
-					<span>Online Banking</span>
-				</label>
-				<label class="payment-option">
-					<input type="radio" name="payment_method">
+					<input type="checkbox" name="payment_method">
 					<span>E-Wallet</span>
 				</label>
+				<div class="payment_detail" style="display: none;">
+					<p>Pay using your preferred E-Wallet app.</p>
+					<img src="./ewallet.jpg" alt="E-Wallet QR Code" width="400" height=500 />
+					<br>
+					<input type="file" name="payment_proof" accept="image/*" required>
 
-				<button type="button" class="btn-add pay-btn" <?= empty($checkoutItems) ? 'disabled' : '' ?>>Confirm Payment</button>
+				</div>
+
+				
+
+				<button type="submit" class="btn-add pay-btn" <?= empty($checkoutItems) ? 'disabled' : '' ?>>Confirm Payment</button>
 			</form>
 		</div>
 	</div>
 </div>
+
+<script>
+	const paymentOptions = document.querySelectorAll('.payment-option input');
+	const paymentDetail = document.querySelector('.payment_detail');
+
+	paymentOptions.forEach(option => {
+		option.addEventListener('change', () => {
+			if (option.checked) {
+				paymentDetail.style.display = 'block';
+			} else {
+				paymentDetail.style.display = 'none';
+			}
+		});
+	});
+</script>
+
+
 
 <?php include('footer.php'); ?>
