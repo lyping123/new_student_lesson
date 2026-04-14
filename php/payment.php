@@ -1,23 +1,24 @@
 <?php include('header.php');  
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $cartid=$_GET['cart_id'] ?? 0;
+    $cartid = $_GET['cart_id'] ?? 0;
     $paymentProof = $_FILES['payment_proof'] ?? null;
+    $payment_type = $_POST['payment_method'] ?? 'E-Wallet';
+    $payment_amount = $_POST['payment_amount'] ?? 0;
+    $payment_date = date('Y-m-d H:i:s');
+
     if ($paymentProof) {
         $uploadDir = 'uploads/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
-        $payment_type='E-Wallet';
-        $payment_amount=$_POST['payment_amount'] ?? 0;
-        $payment_date=date('Y-m-d H:i:s');
-
         $fileName = basename($paymentProof['name']);
-        $targetFilePath = $uploadDir .date("Ymd_His") . '_' . $fileName;
-        $qry=$conn->prepare("UPDATE cart_id set c_status = ?, payment_amount=?, payment_date=?,payment_type=? where id = ?");
-        $qry->bind_param("sdssi",$targetFilePath , $payment_amount, $payment_date, $payment_type, $cartid);
+        $targetFilePath = $uploadDir . date("Ymd_His") . '_' . $fileName;
+        $qry = $conn->prepare("UPDATE cart_id set c_status = ?, payment_amount=?, payment_date=?, payment_type=? where id = ?");
+        $qry->bind_param("sdssi", $targetFilePath, $payment_amount, $payment_date, $payment_type, $cartid);
         $qry->execute();
         if (move_uploaded_file($paymentProof['tmp_name'], $targetFilePath)) {
-            echo "<script>alert('Payment proof uploaded successfully!'); window.location.href='payment.php?cart_id=$cartid';</script>";
+            $msg = $payment_type === 'FTX' ? 'Simulated FTX payment proof uploaded successfully!' : 'Payment proof uploaded successfully!';
+            echo "<script>alert('$msg'); window.location.href='payment.php?cart_id=$cartid';</script>";
         } else {
             echo "<script>alert('Failed to upload payment proof. Please try again.'); window.location.href='checkoutList.php?cart_id=$cartid';</script>";
         }
