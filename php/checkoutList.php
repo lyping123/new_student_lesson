@@ -106,22 +106,27 @@ if ($result->num_rows === 0) {
 		<div class="checkout-section payment-box">
 			<h4>Payment Method</h4>
 			<form class="payment-method-form" action="payment.php?cart_id=<?= $cartId ?>" method="post" enctype="multipart/form-data">
-				
 				<input type="hidden" name="payment_amount" value="<?= $grandTotal ?>">
 				<label class="payment-option">
-					<input type="checkbox" name="payment_method">
+					<input type="radio" name="payment_method" value="E-Wallet" checked>
 					<span>E-Wallet</span>
 				</label>
-				<div class="payment_detail" style="display: none;">
+				<label class="payment-option">
+					<input type="radio" name="payment_method" value="FTX">
+					<span>FTX (Simulated)</span>
+				</label>
+				<div class="payment_detail ewallet_detail" style="display: block;">
 					<p>Pay using your preferred E-Wallet app.</p>
 					<img src="./ewallet.jpg" alt="E-Wallet QR Code" width="400" height=500 />
 					<br>
 					<input type="file" name="payment_proof" accept="image/*" required>
-
 				</div>
-
-				
-
+				<div class="payment_detail ftx_detail" style="display: none;">
+					<p>Simulated FTX Payment. Scan the fake QR code below to simulate payment.</p>
+					<img src="./ftx_simulated.jpg" alt="FTX QR Code" width="400" height=500 />
+					<br>
+					<input type="file" name="payment_proof" accept="image/*" required>
+				</div>
 				<button type="submit" class="btn-add pay-btn" <?= empty($checkoutItems) ? 'disabled' : '' ?>>Confirm Payment</button>
 			</form>
 		</div>
@@ -130,17 +135,25 @@ if ($result->num_rows === 0) {
 
 <script>
 	const paymentOptions = document.querySelectorAll('.payment-option input');
-	const paymentDetail = document.querySelector('.payment_detail');
+	const ewalletDetail = document.querySelector('.ewallet_detail');
+	const ftxDetail = document.querySelector('.ftx_detail');
 
-	paymentOptions.forEach(option => {
-		option.addEventListener('change', () => {
-			if (option.checked) {
-				paymentDetail.style.display = 'block';
-			} else {
-				paymentDetail.style.display = 'none';
+	function updatePaymentDetails() {
+		paymentOptions.forEach(option => {
+			if (option.checked && option.value === 'E-Wallet') {
+				ewalletDetail.style.display = 'block';
+				ftxDetail.style.display = 'none';
+			} else if (option.checked && option.value === 'FTX') {
+				ewalletDetail.style.display = 'none';
+				ftxDetail.style.display = 'block';
 			}
 		});
+	}
+
+	paymentOptions.forEach(option => {
+		option.addEventListener('change', updatePaymentDetails);
 	});
+	updatePaymentDetails();
 </script>
 
 
