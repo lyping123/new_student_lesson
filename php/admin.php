@@ -1,5 +1,13 @@
-<?php include("header.php"); ?>
+<?php include("header.php"); 
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: login.php");
+    exit();
+}
 
+
+?>
+
+ 
 
 <div class="container">
     <div class="card">

@@ -102,6 +102,10 @@ if ($result->num_rows === 0) {
 				</div>
 			<?php } ?>
 		</div>
+		<div class="checkout-section shipping-box">
+			<h4>Shipping Address</h4>
+			<p>123 Main Street, Cityville, Country</p>	
+		</div>
 
 		<div class="checkout-section payment-box">
 			<h4>Payment Method</h4>
