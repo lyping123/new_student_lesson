@@ -9,55 +9,85 @@
     <style>
         .container{
             display:grid;
-            grid-template-columns: 40% 10% 50%;
+            grid-template-columns: repeat(3 ,1fr);
+            grid-template-rows: 1fr 1fr;
+        }
+        .container div:nth-child(even){
+            background-color: #44ff00;
+            border: 2px solid black;
+        }
+        .container div:nth-child(odd){
+            background-color: #e61515;
+            border: 2px solid black;
         }
 
         .container2{
             display:grid;
             grid-template-columns: repeat(5, 1fr);
+            grid-template-areas: 
+                "header header header header header"
+                "img1 img2 img3 img4 img5"
+                "text1 text1 text1 text2 text2"
+                "footer footer footer footer footer";
         }
-        .container2 div:nth-child(1){
-            grid-column: 1/6
+         .container2 div:nth-child(1){
+            grid-area: header;
+        }
+        .container2 div:nth-child(2){
+            grid-area: img1;
+        }
+        .container2 div:nth-child(3){
+            grid-area: img2;
+        }
+        .container2 div:nth-child(4){
+            grid-area: img3;
+        }
+        .container2 div:nth-child(5){
+            grid-area: img4;
+        }
+        .container2 div:nth-child(6){
+            grid-area: img5;
         }
         .container2 div:nth-child(7){
-            grid-column: 1/4;
+            grid-area: text1;
         }
         .container2 div:nth-child(8){
-            grid-column: 4/6;
+            grid-area: text2;
         }
         .container2 div:nth-child(9){
-            grid-column: 1/6;
-        } 
+            grid-area: footer;
+        }  
+
     </style>
 
     <div class="container">
-        <div style="background-color: lightblue; border: 2px solid black;">Item 1</div>
-        <div style="background-color: lightgreen; border: 2px solid black;">Item 2 </div>
-        <div style="background-color: lightcoral; border: 2px solid black;">Item 3</div>
-        <div style="background-color: lightgoldenrodyellow; border: 2px solid black;">Item 4</div>
-        <div style="background-color: lightpink; border: 2px solid black;">Item 5</div>
-        <div style="background-color: lightgray; border: 2px solid black;">Item 6</div>
+        <div  >Item 1</div>
+        <div >Item 2 </div>
+        <div >Item 3</div>
+        <div >Item 4</div>
+        <div >Item 5</div>
+        <div >Item 6</div>
     </div>
-    <br>
+
 
     <div class="container2">
         <div style="background-color: lightblue; border: 2px solid black;">
            <h1>This is Grid header</h1>
         </div>
         <div style="background-color: lightgreen; border: 2px solid black;">
-            <img src="budget.png" height="150px" alt="Placeholder Image">
+            <img src="./picture/banana.jpg" height="150px" alt="Placeholder Image">
         </div>
         <div style="background-color: lightcoral; border: 2px solid black;">
-            <img src="budget.png" height="150px" alt="Placeholder Image">
+            <img src="./picture/budget.png" height="150px" alt="Placeholder Image">
         </div>
         <div style="background-color: lightgoldenrodyellow; border: 2px solid black;">
-            <img src="budget.png" height="150px" alt="Placeholder Image">
+            <img src="./picture/budget.png" height="150px" alt="Placeholder Image">
         </div>
         <div style="background-color: lightpink; border: 2px solid black;">
-            <img src="budget.png" height="150px" alt="Placeholder Image">
+            <img src="./picture/budget.png" height="150px" alt="Placeholder Image">
         </div>
         <div style="background-color: lightgray; border: 2px solid black;">
-            <img src="budget.png" height="150px" alt="Placeholder Image">
+            <img src="./picture/budget.png" height="150px" alt="Placeholder Image">
         </div>
         <div style="background-color: rgb(148, 2, 112); border: 2px solid black;">
             <p>this is my image photo and this is a calculator image</p>
@@ -68,7 +98,6 @@
         <div style="background-color: rgb(255, 39, 39); border: 2px solid black;">
             <p>this is footer section</p>
         </div>
-        
     </div>
     
 </body>
