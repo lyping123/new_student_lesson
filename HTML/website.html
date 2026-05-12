@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="style1.css" />
 </head>
 <body> 
+
     <div class="navbar">
         <h1>My Website</h1>
+        <button  class="menu-toggle" >☰</button>
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -33,9 +35,26 @@
             <h3>Sidebar</h3>
             <p>This is the sidebar content.</p>
         </div>
+         <div class="main">
+            <h2>Welcome to My Website</h2>
+            <p>This is a sample website layout using Flexbox and Grid.</p>
+        </div>
+        <div class="sub">
+            <h3>Sidebar</h3>
+            <p>This is the sidebar content.</p>
+        </div>
     </div>
     <div class="footer">
         <p>&copy; 2024 My Website. All rights reserved.</p>
     </div>
 </body>
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar ul');
+
+    menuToggle.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+    });
+</script>
 </html>
