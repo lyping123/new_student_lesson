@@ -14,13 +14,21 @@
             position: relative;
         }
         .car-box{   
+            top: 300px;
             position: absolute;
-            animation-name: moveforward, car-rotate;
+            transform: rotate3d(200, 200, 300, 50deg);
+            transform: rotateX(180deg);
+            transform: rotateY(180deg);
+            transform: skew(-20deg,-20deg);
+            transform: translate(300px,-300px);
+            transform: scale(0.01);
+            
+            /*animation-name: moveforward, carfly;
             animation-duration: 1s, 2s;
             animation-delay: 0s, 1s;
             animation-iteration-count: 1, 1;
             animation-fill-mode: forwards;
-            animation-timing-function: linear;
+            animation-timing-function: linear;*/
         }
         .tome{
             width: 20px;
@@ -48,6 +56,16 @@
                 transform: rotate(235deg);
             }
         }
+
+        @keyframes carfly{
+            0%{
+                transform: translate(0,0);
+            }
+            100%{
+                transform: translate(300px,-300px);
+            }
+        }
+
         
     </style>
     <div class="animated-box">

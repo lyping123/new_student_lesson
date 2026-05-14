@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowling Ball</title>
+</head>
+<body>
+
+    <style>
+  
+      .BowlingBalla img{
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        animation-name: bowlingroll, BowlingBall;
+        animation-duration: 3s, 3s;
+        animation-fill-mode: forwards;
+      }
+      
+      .BowlingBall-Pin img{
+        left: 500px;
+        top: 10px;
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        animation-name: Bowlingpindropdown;
+        animation-duration: 0.7s;
+        animation-delay: 0.6s;
+        animation-fill-mode: forwards;
+        
+      }
+    .BowlingBall-Pint img{
+        left: 800px;
+        top: 50px;
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        animation-name: Bowlingpindropdownt;
+        animation-duration: 0.7s;
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+     }
+     .BowlingBall-Pinth img{
+        left: 1000px;
+        top: 30px;
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        animation-name: Bowlingpindropdownth;
+        animation-duration: 0.95s;
+        animation-delay: 1.4s;
+        animation-fill-mode: forwards;
+     }
+     .strike{
+        width: 100px;
+        height: 100px;
+        left: 1700px;
+        position: absolute;
+        animation-name: S;
+        animation-duration: 1s;
+        animation-delay: 2.5s;
+        animation-fill-mode: forwards;
+     }
+      
+      @keyframes bowlingroll{
+        0%{
+            transform: rotate(0deg);
+        }
+        
+        100%{
+            transform: rotate(860deg);
+        }
+      }
+        @keyframes BowlingBall{
+            0%{
+                left:0 ;
+            }
+            100%{
+                left: 1200px ;
+            }
+        }
+        @keyframes Bowlingpindropdown{
+            0%{
+                transform: rotate(0deg);
+            }
+            
+            100%{
+                transform: rotate(90deg);
+            }
+        }
+         @keyframes Bowlingpindropdownt{
+            0%{
+                transform: rotate(0deg);
+            }
+            
+            100%{
+                transform: rotate(90deg);
+            }
+        }
+        @keyframes Bowlingpindropdownth{
+            0%{
+                transform: rotate(0deg);
+            }
+            
+            100%{
+                transform: rotate(90deg);
+            }
+        }
+        @keyframes S {
+            0%{
+                opacity: 0;
+                transform: translateX(200px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateX(-340px);
+            }
+        }
+
+
+    </style>
+    
+    <div class="BowlingBalla">
+       <img src="https://png.pngtree.com/png-clipart/20240911/original/pngtree-bowling-ball-isolated-realistic-png-image_15985449.png">
+    </div>
+    <div class="BowlingBall-Pin">
+        <img src="https://png.pngtree.com/png-clipart/20230429/ourmid/pngtree-bowling-pins-png-image_6742377.png">
+    </div> 
+    <div class="BowlingBall-Pint">
+        <img src="https://png.pngtree.com/png-clipart/20230429/ourmid/pngtree-bowling-pins-png-image_6742377.png">
+    </div>
+    <div class="BowlingBall-Pinth">
+        <img src="https://png.pngtree.com/png-clipart/20230429/ourmid/pngtree-bowling-pins-png-image_6742377.png">
+    </div>
+    <div class="strike">
+        <img style="height: 180px; width: 180px;" src="https://images.vexels.com/media/users/3/262953/isolated/preview/db8fc5557b3bb9b918d59ac8ce857211-bowling-color-stroke-quote-strike.png">
+<!--  -->
+    </body>
+</html>
