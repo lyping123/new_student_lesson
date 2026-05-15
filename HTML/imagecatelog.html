@@ -7,6 +7,10 @@
 </head>
 
 <style>
+    h1{
+        text-align: center;
+        animation: frash 1s infinite;
+    }
     .container{
         display: grid;
         grid-template-columns: repeat(7, auto);
@@ -46,11 +50,24 @@
         background-color: pink;
     }
     
+    @keyframes frash{
+        0%{
+            background-color: red;
+        }
+        50%{
+            background-color: pink;
+        }
+        100%{
+            background-color: red;
+        }
+        
+    }
 
     
 
 </style>
 <body>
+     <h1>Happy Teacher days</h1>
     <div class="container">
         <div>1</div>
         <div>2</div>
@@ -83,6 +100,7 @@
         <div>29</div>
         <div>30</div>
     </div>
+   
 
 
 </body>
