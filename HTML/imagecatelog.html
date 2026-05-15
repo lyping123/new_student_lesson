@@ -13,42 +13,55 @@
     }
     .container{
         display: grid;
-        grid-template-columns: repeat(7, auto);
-        gap: 0px 0px;
+        grid-template-columns: repeat(7, 70px);
+        grid-auto-rows: 70px;
+        gap: 0;
+        width: fit-content;
+        margin: 20px auto;
+        justify-content: center;
     }
     .container div{
-        height: 100px;
+        font-size: 0;
     }
-    .container div:nth-child(2), .container div:nth-child(3){
+
+    .container div:nth-child(2),
+    .container div:nth-child(3),
+    .container div:nth-child(5),
+    .container div:nth-child(6),
+    .container div:nth-child(8),
+    .container div:nth-child(11),
+    .container div:nth-child(14),
+    .container div:nth-child(15),
+    .container div:nth-child(21),
+    .container div:nth-child(23),
+    .container div:nth-child(27),
+    .container div:nth-child(31),
+    .container div:nth-child(33),
+    .container div:nth-child(39){
         background-color: red;
     }
-    .container div:nth-child(7), .container div:nth-child(10), .container div:nth-child(11), .container div:nth-child(9), .container div:nth-child(12), .container div:nth-child(14), .container div:nth-child(21){
-        background-color: red;
-    }
-    .container div:nth-child(16), .container div:nth-child(27){
-        background-color: red;
-    }
-    .container div:nth-child(5){
-        grid-column: span 2;
-        grid-row: span 2;
-        background-color: rgb(255, 0, 43);
-    }
-    .container div:nth-child(8){
-        grid-column: span 2;
-        grid-row: span 2;
-        background-color: pink;
-    }
-    .container div:nth-child(13){
-        grid-column: span 2;
-        grid-row: span 2;
+    .container div:nth-child(9),
+    .container div:nth-child(10),
+    .container div:nth-child(12),
+    .container div:nth-child(13),
+    .container div:nth-child(16),
+    .container div:nth-child(17),
+    .container div:nth-child(18),
+    .container div:nth-child(19),
+    .container div:nth-child(20),
+    .container div:nth-child(24),
+    .container div:nth-child(25),
+    .container div:nth-child(26),
+    .container div:nth-child(32){
         background-color: pink;
     }
 
-    .container div:nth-child(17){
-        grid-column: span 2;
-        grid-row: span 2;
-        background-color: pink;
+    .container div{
+        border: 1px solid transparent;
     }
+    
+
+    
     
     @keyframes frash{
         0%{
@@ -99,6 +112,25 @@
         <div>28</div>
         <div>29</div>
         <div>30</div>
+        <div>31</div>
+        <div>32</div>
+        <div>33</div>
+        <div>34</div>
+        <div>35</div>
+        <div>36</div>
+        <div>37</div>
+        <div>38</div>
+        <div>39</div>
+        <div>40</div>
+        <div>41</div>
+        <div>42</div>
+        <div>43</div>
+        <div>44</div>
+        <div>45</div>
+        <div>46</div>
+        <div>47</div>
+        <div>48</div>
+        <div>49</div>
     </div>
    
 
