@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript Basics - regex</h1>
+    <p id="word">Regular expressions (regex) are patterns used to match character combinations in strings. rexgex In JavaScript, regex is implemented through the RegExp object and can be used with string methods like test(), exec(), match(), replace(), search(), and split().</p>
+
+    <p id="result"></p>
+    <label for="emailInput">Enter your email:</label>
+    <input type="text" id="emailInput"  />
+    <button type="button" onclick="validateEmail()">Validate Email</button>
+
+    <script>
+        let word=document.getElementById("word").innerText;
+        const result=document.getElementById("result");
+        //result.innerText=word.match(/regex/gi);
+
+        //result.innerText=word.replace(/regex/gi,"REXGEX");
+
+        result.innerText=word.split(/\./g).join("\n");
+
+        //result.innerText=word.search(/regex/gi);
+
+        let string="a45b3cC1253dasd3eafd4f56";
+        const regex=/[^a-zA-Z]+/g;
+        const matches=string.match(regex);
+        result.innerText=matches.join("");
+
+
+        // Explanation for selected regex: const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // - ^ and $ assert start and end of the whole string
+        // - [^\s@]+ matches one or more characters that are NOT whitespace or '@'
+        // - @ matches the literal at-sign
+        // - "." (escaped as \.) matches a literal dot before the domain TLD
+        // This is a simple email validation pattern (not exhaustive).
+
+        function validateEmail(){
+            const email=document.getElementById("emailInput").value;
+            
+            const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(regex.test(email)){
+                console.log("Valid email address.");
+                alert("Valid email address.");
+            }else{
+                console.log("Invalid email address.");
+                alert("Invalid email address.");
+            }
+        }
+    </script>
+    
+</body>
+</html>
