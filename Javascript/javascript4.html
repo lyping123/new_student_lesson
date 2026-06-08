@@ -12,20 +12,27 @@
     <button type="button" onclick="checkAge()">Check Age</button>
 
     <script>
-        let age=9;
+        let age=17;
         if(age<18){
             //-num 17
             console.log("You are a minor.");
         }else if(age==18){
             //18
             console.log("You are just an adult.");
-        }else{
-            //19+
+        }else if(age>18 && age<30){
+            //19-29
             console.log("You are an adult.");
+        }else if(age>=30 && age<60){
+            //30-59
+            console.log("You are a middle-aged adult.");
+        }else{
+            //60+
+            console.log("You are a senior citizen.");
         }
 
-        let name="123";
-        if(name===123){
+        let name="8";
+
+        if(name===8){
             //string example abc123 and integer example 123
             //type and value
             console.log("Hello John!");
@@ -36,13 +43,13 @@
         
         function checkAge(){
             age=parseInt(document.getElementById("ageInput").value);
+            console.log(age);
             const h1=document.createElement("h1");
             
             switch(true){
             case age>=1 && age<=12:
                 console.log("child");
                 h1.innerText="You are a child";
-                
                 document.body.appendChild(h1);
                 break;
             case age>=13 && age<=17:
@@ -59,10 +66,8 @@
                 h1.innerText="You are an adult";
                 document.body.appendChild(h1);
                 console.log("you are above 30 years old");
+            }
         }
-        }
-        
-        
     </script>
 </body>
 </html>

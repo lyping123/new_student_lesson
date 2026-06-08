@@ -35,6 +35,7 @@
         }
     </style>
     <h1>JavaScript Basics</h1>
+    <button onclick="changeContent()">Change Content</button>
 
     <div class="container">
         <div class="div1">
@@ -43,24 +44,25 @@
         <div class="div2">
             <h1>50</h1>
         </div>
-       
     </div>
-    
     
     <button onclick="addRedDiv()">Add Red Div</button>
     <button style="float: right;" onclick="addGreenDiv()">Add Green Div</button>
     
     
     <script>
+
         //part1
         let message = "Hello, World!";
-        const data1=123;
-        console.log(message);
-        
 
+        const data1=123;
+        
+        console.log(data1);
+        
         //part2
         //Document object model
         const data="hi this is my new content";
+
         function changeContent(){
             const heading=document.querySelector('h1');
             heading.style.color='blue';
@@ -69,7 +71,7 @@
 
         let flexvalueRed=1;
         const headingRed=document.querySelector('.div1 h1');
-        const headingGreen=document.querySelector('.div2 h1');
+        const headingGreen=document.querySelector('.div2 h1'); 
         function addRedDiv(){
             const divred=document.querySelector('.div1');
             
@@ -80,6 +82,7 @@
             divred.style.flex=flexvalueRed;   
         }
         let flexvalueGreen=1;
+
         function addGreenDiv(){
             const divgreen=document.querySelector('.div2');
             headingGreen.textContent=flexvalueGreen/(flexvalueRed+flexvalueGreen)*100;

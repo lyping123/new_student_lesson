@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>经典贪吃蛇 - 越吃越快！</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        #score-board {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 4px solid #fff;
+            background-color: #111;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        #game-over {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: red;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid red;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>贪吃蛇 (速度随长度暴增版)</h1>
+    <div id="score-board">当前分数: <span id="score">0</span> | 当前速度等级: <span id="speed-level">1</span></div>
+    
+    <div style="position: relative;">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="game-over">
+            <h2>游戏结束!</h2>
+            <p>最终得分: <span id="final-score">0</span></p>
+            <button onclick="resetGame()">重新开始</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score");
+        const speedLevelElement = document.getElementById("speed-level");
+        const gameOverScreen = document.getElementById("game-over");
+        const finalScoreElement = document.getElementById("final-score");
+
+        // 游戏网格大小
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+
+        // 游戏变量
+        let snake = [];
+        let food = { x: 0, y: 0 };
+        let dx = gridSize; // 初始水平速度
+        let dy = 0;        // 初始垂直速度
+        let score = 0;
+        let gameInterval;
+        
+        // 速度控制核心变量
+        const initialSpeed = 200; // 初始刷新间隔（毫秒），越小越快
+        const minSpeed = 50;      // 最快刷新间隔（极限速度限制）
+        let currentSpeed = initialSpeed;
+
+        // 监听键盘事件
+        document.addEventListener("keydown", changeDirection);
+
+        // 启动游戏
+        resetGame();
+
+        // 游戏主循环
+        function main() {
+            if (hasGameEnded()) {
+                gameOverScreen.style.display = "block";
+                finalScoreElement.innerText = score;
+                clearInterval(gameInterval);
+                return;
+            }
+
+            clearCanvas();
+            drawFood();
+            moveSnake();
+            drawSnake();
+        }
+
+        // 画布刷新
+        function clearCanvas() {
+            ctx.fillStyle = "#111";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 绘制蛇
+        function drawSnake() {
+            snake.forEach((part, index) => {
+                // 蛇头用亮绿色，蛇身用普通绿色
+                ctx.fillStyle = index === 0 ? "#00ff00" : "#45a049";
+                ctx.strokeStyle = "#111"; // 蛇身隔断线
+                ctx.fillRect(part.x, part.y, gridSize, gridSize);
+                ctx.strokeRect(part.x, part.y, gridSize, gridSize);
+            });
+        }
+
+        // 移动蛇
+        function moveSnake() {
+            // 创建新的蛇头
+            const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            snake.unshift(head);
+
+            // 检查是否吃到食物
+            const hasEatenFood = snake[0].x === food.x && snake[0].y === food.y;
+            if (hasEatenFood) {
+                score += 10;
+                scoreElement.innerText = score;
+                generateFood();
+                // 核心：每吃一个食物，长度增加，同时重新调整游戏速度
+                adjustSpeed();
+            } else {
+                // 没吃到食物，移除蛇尾
+                snake.pop();
+            }
+        }
+
+        // 动态调整速度的逻辑
+        function adjustSpeed() {
+            // 计算新速度：每多长一节身体（即吃一个食物），延迟减少 8 毫秒
+            let speedDecrease = (snake.length - 3) * 8; 
+            currentSpeed = initialSpeed - speedDecrease;
+
+            // 确保速度不会无限快导致无法游玩
+            if (currentSpeed < minSpeed) {
+                currentSpeed = minSpeed;
+            }
+
+            // 更新页面上的速度等级显示 (数字越大越快)
+            const speedLevel = Math.floor((initialSpeed - currentSpeed) / 10) + 1;
+            speedLevelElement.innerText = speedLevel;
+
+            // 重置定时器，应用新的速度
+            clearInterval(gameInterval);
+            gameInterval = setInterval(main, currentSpeed);
+        }
+
+        // 随机生成食物
+        function generateFood() {
+            food.x = Math.floor(Math.random() * tileCount) * gridSize;
+            food.y = Math.floor(Math.random() * tileCount) * gridSize;
+
+            // 防止食物生成在蛇的身体上
+            snake.forEach(part => {
+                const hasEaten = part.x === food.x && part.y === food.y;
+                if (hasEaten) generateFood();
+            });
+        }
+
+        // 绘制食物
+        function drawFood() {
+            ctx.fillStyle = "#ff4444"; // 红色的苹果
+            ctx.fillRect(food.x, food.y, gridSize, gridSize);
+        }
+
+        // 控制方向（防止直接掉头）
+        function changeDirection(event) {
+            const LEFT_KEY = 65;
+            const UP_KEY = 87;
+            const RIGHT_KEY = 68;
+            const DOWN_KEY = 83;
+
+            const keyPressed = event.keyCode;
+            const goingUp = dy === -gridSize;
+            const goingDown = dy === gridSize;
+            const goingRight = dx === gridSize;
+            const goingLeft = dx === -gridSize;
+
+            if (keyPressed === LEFT_KEY && !goingRight) {
+                dx = -gridSize;
+                dy = 0;
+            }
+            if (keyPressed === UP_KEY && !goingDown) {
+                dx = 0;
+                dy = -gridSize;
+            }
+            if (keyPressed === RIGHT_KEY && !goingLeft) {
+                dx = gridSize;
+                dy = 0;
+            }
+            if (keyPressed === DOWN_KEY && !goingUp) {
+                dx = 0;
+                dy = gridSize;
+            }
+        }
+
+        // 碰撞检测（边界和自身）
+        function hasGameEnded() {
+            // 撞自己
+            for (let i = 4; i < snake.length; i++) {
+                if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
+            }
+            // 撞墙
+            const hitLeftWall = snake[0].x < 0;
+            const hitRightWall = snake[0].x >= canvas.width;
+            const hitToptWall = snake[0].y < 0;
+            const hitBottomWall = snake[0].y >= canvas.height;
+
+            return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
+        }
+
+        // 初始化/重置游戏
+        function resetGame() {
+            snake = [
+                { x: 160, y: 200 },
+                { x: 140, y: 200 },
+                { x: 120, y: 200 }
+            ];
+            score = 0;
+            dx = gridSize;
+            dy = 0;
+            currentSpeed = initialSpeed;
+            
+            scoreElement.innerText = score;
+            speedLevelElement.innerText = "1";
+            gameOverScreen.style.display = "none";
+            
+            generateFood();
+            clearInterval(gameInterval);
+            gameInterval = setInterval(main, currentSpeed);
+        }
+    </script>
+</body>
+</html>

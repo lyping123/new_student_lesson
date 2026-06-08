@@ -8,12 +8,12 @@
 <body>
     <h1>JavaScript Course 3</h1>
     <p>Welcome to the third course on JavaScript!</p>
-
+    
     <p id="fruitDisplay"></p>
-     <p id="integerDisplay"></p>
+    <p id="integerDisplay"></p>
     <script>
         let Fruit="apple";
-        let Fruits=["apple","banana","orange","grape",'mango','kiwi','pear','peach'];
+        let Fruits=["apple","banana","orange","grape",'mango','kiwi','pear'];
         
         // for loop
         for(let i=0;i<Fruits.length;i++){
@@ -39,7 +39,7 @@
             document.getElementById("fruitDisplay").innerHTML+=fruit+"<br>";
         });
 
-        for(let i=100;i>=1;i--){
+        for(let i=1;i<=100;i++){
             document.getElementById("integerDisplay").innerHTML+=i+"<br>";
         }
         
