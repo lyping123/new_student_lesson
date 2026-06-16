@@ -1,51 +1,28 @@
 <?php 
-    include "db.php";
-
-    "Hello World <br>";
-    
-    $name="john";
-    $age=31;
-    $gender="male";
-    $age+=5;
-    
-    "My name is $name, I am $age years old and I am a $gender.";
+include "db.php";
 
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $username= $_POST["username"];
         $password=$_POST["password"];
-
-        // $qry="SELECT * FROM users WHERE username='$username' AND password='123'";
-        // $sttr=mysqli_query($conn,$qry);
-        // $num=mysqli_num_rows($sttr);
-        // if($num>0){
-        //     $_SESSION["username"]=$username;
-        //     echo "<script>alert('Login successful');
-        //     window.location.href='main.php';
-        //     </script>";
-        // } else {
-        //     echo "<script>alert('Login failed');
-        //     window.location.href='index.php';
-        //     </script>";
-        // }
-
-        
-        $qry=$conn->prepare("SELECT * FROM users WHERE username=?");
-        $qry->bind_param("s",$username);
+                
+        $qry=$conn->prepare("SELECT * FROM users WHERE username=? AND password=?");
+        $qry->bind_param("ss",$username, $password);
         $qry->execute();
         $result=$qry->get_result();
         if($result->num_rows>0){
+            echo "<script>alert('Login successful')</script>";
             $user = $result->fetch_assoc();
             
-            if (password_verify($password, $user['password'])) {
-                $_SESSION["username"]=$user["username"];
-                $_SESSION["user_id"]=$user["Id"];
+            // if (password_verify($password, $user['password'])) {
+            //     $_SESSION["username"]=$user["username"];
+            //     $_SESSION["user_id"]=$user["Id"];
                 
-                echo "<script>alert('Login successful');
-                window.location.href='main.php';
-                </script>";
-            } else {
-                echo "Login failed";
-            }
+            //     echo "<script>alert('Login successful');
+            //     window.location.href='main.php';
+            //     </script>";
+            // } else {
+            //     echo "Login failed";
+            // }
         }
     }  
 ?>

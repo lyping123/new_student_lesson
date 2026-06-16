@@ -4,10 +4,10 @@ if(session_status()==PHP_SESSION_NONE){
 }
 $servername="localhost";
 $username="root";
-$password="";
+$password="1234";
 $database="ecommerce";
 
-$conn=new mysqli($servername,$username,$password,$database);
+$conn=new mysqli($servername,$username,$password,$database,3307);
 
 if($conn->connect_error){
     die("Connection failed: ".$conn->connect_error);
