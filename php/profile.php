@@ -1,10 +1,8 @@
 <?php 
 include('header.php'); 
-include("security.php");
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    
     $name = $_POST["name"];
     $phone = $_POST["phone"];
     $gender = $_POST['gender'];
@@ -14,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $qry=$conn->prepare("UPDATE users SET name=?, phone=?, gender=?, email=?
     , address=? WHERE username=?");
     $qry->bind_param("ssssss",$name, $phone, $gender, $email, $address, 
-$_SESSION["username"]);
+    $_SESSION["username"]);
     if($qry->execute()){
         echo "<script>alert('Profile updated successfully');</script>";
     }else{
@@ -23,6 +21,7 @@ $_SESSION["username"]);
 }
 
 $qry=$conn->prepare("SELECT * FROM users WHERE username=?");
+
 $qry->bind_param("s", $_SESSION["username"]);
 $qry->execute();
 $result=$qry->get_result();
@@ -67,8 +66,10 @@ $user=$result->fetch_assoc();
             <label for="gender">Gender:</label>
             <select id="gender" name="gender" class="form-control">
                 <option value="">Select Gender</option>
-                <option value="male" <?=$user["gender"] == "male" ? "selected" : ""?>>Male</option>
-                <option value="female" <?=$user["gender"] == "female" ? "selected" : ""?>>Female</option>
+                <?php //if($user['gender']=="male"){echo "selected";}else{echo "";}?> 
+                <option value="male" <?=$user["gender"] == "male" ? "selected" : "" ?>>Male</option>
+                <option value="female" <?=$user["gender"] == "female" ? "selected" : "" ?>>Female</option>
+                <option value="other" <?=$user["gender"] == "other" ? "selected" : "" ?>>Other</option>
             </select>
         </div>
         <div class="form-group">

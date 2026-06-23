@@ -32,5 +32,7 @@
                     <a href="register.php">Register</a>
                 <?php } ?>
             </li>
+            
         </ul>
+        
     </nav>

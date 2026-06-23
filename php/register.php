@@ -1,5 +1,6 @@
 <?php 
-// include 'db.php';
+include 'db.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Username already exists!";
         exit();
     }
-
+    //stop
     if ($password === $confirm_password) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         // $hashed_password=md5($password);
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    
     <div class="container">
         <h1>Register</h1>
         <div class="card">
@@ -55,8 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label>Confirm password:</label>
                     <input type="password" name="confirm_password" />
                 </div>
-                <a href="index.php">Login page</a><br>
-                 <button type="submit" name="register">register</button>
+                <div class="form-group">
+                    <a href="index.php">Login page</a><br>
+                    <button type="submit" name="register">register</button>
+                </div>
+                
             </form>      
         </div>
     </div>

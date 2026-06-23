@@ -74,7 +74,7 @@ footer{
     color: white;
     text-align: center;
     padding: 10px 0;
-   
+    
     bottom: 0;
 }
 
@@ -102,6 +102,7 @@ footer{
     padding: 30px 15px 80px;
     background: linear-gradient(135deg, #f4f8fb 0%, #e7eff7 100%);
 }
+
 
 .profile-card {
     width: min(92%, 560px);
