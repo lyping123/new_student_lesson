@@ -56,9 +56,6 @@ if (isset($_GET['search'])){
                 </tr>
             <?php } ?>      
         </tbody>
-
     </table>
-
-    
 </body>
 </html>

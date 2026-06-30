@@ -16,33 +16,39 @@ if(isset($_GET['action']) && $_GET['action']=="delete" && isset($_GET['id'])){
     }
 }
 
-if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['add_to_cart'])){
-    $productId = (int)$_POST['product_id'];
-    if ($productId > 0) {
-        if (isset($_SESSION['cart'][$productId])) {
-            $_SESSION['cart'][$productId] += 1;
-        } else {
-            $_SESSION['cart'][$productId] = 1;
-        }
+// if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['add_to_cart'])){
+//     $productId = (int)$_POST['product_id'];
+//     if ($productId > 0) {
+//         if (isset($_SESSION['cart'][$productId])) {
+//             $_SESSION['cart'][$productId] += 1;
+//         } else {
+//             $_SESSION['cart'][$productId] = 1;
+//         }
 
-        $json=json_encode($_SESSION['cart']);
-        file_put_contents('cart.json', $json);
+//         $json=json_encode($_SESSION['cart']);
+//         file_put_contents('cart.json', $json);
 
-        echo "<script>alert('Product added to cart');
-        window.location.href='product.php';
-        </script>";
-    } else {
-        echo "<script>alert('Invalid product ID');
-        window.location.href='product.php';
-        </script>";
-    }
-}   
-
-
-
+//         echo "<script>alert('Product added to cart');
+//         window.location.href='product.php';
+//         </script>";
+//     } else {
+//         echo "<script>alert('Invalid product ID');
+//         window.location.href='product.php';
+//         </script>";
+//     }
+// }   
 $qry=$conn->prepare("SELECT * FROM products");
 $qry->execute();
 $result=$qry->get_result();
+
+if(isset($_GET['search']) && !empty($_GET['search']) ){
+    $search=$_GET['search'];
+    $qry=$conn->prepare("SELECT * FROM products WHERE sku LIKE ? OR price LIKE ? OR quantity LIKE ? OR date_created LIKE ?");
+    $searchParam = "%$search%";
+    $qry->bind_param("ssss", $searchParam, $searchParam, $searchParam, $searchParam);
+    $qry->execute();
+    $result=$qry->get_result();
+}
 
 ?>
 
@@ -57,9 +63,12 @@ $result=$qry->get_result();
     </div>
 
     <div class="card">
+        <form action="" method="get">
         <div class="search-box">
-            <input type="text" placeholder="Search product...">
+            <input type="text" placeholder="Search product..." name="search">
+            <button class="btn-search" name="submit">Search</button>
         </div>
+         </form>
     </div>
 
     <table>

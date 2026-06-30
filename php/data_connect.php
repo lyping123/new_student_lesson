@@ -5,5 +5,4 @@ $password='';
 $dbname='inventory';
 $conn=new mysqli($servername,$username,$password,$dbname);
 
-
 ?>
