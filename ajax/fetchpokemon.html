@@ -1,0 +1,142 @@
+<style>
+    #poken{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 20px;
+    }
+    img{
+        border: 1px solid black;
+    }
+</style>
+
+<div id="poken">
+
+</div>
+
+
+<script>
+/*function loadapi(){
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=100')
+    .then(response =>{
+        if(!response.ok){
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(data => {
+        let pokemons=data.results;
+        //console.log(pokemons);
+        let maindiv=document.getElementById("poken");
+        pokemons.forEach(pokemon=>{
+            
+            fetch(pokemon.url)
+            .then(response=>{
+                if(!response.ok){
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(characteristics=>{
+                //console.log(characteristics);
+                const para = document.createElement("div");
+                para.style.border="1px solid black";
+                para.style.padding="5px";
+                para.style.borderRadius="5px";
+
+                fetch(characteristics.species.url)
+                .then(response=>{
+                    return response.json();
+                })
+                .then(color=>{
+                    
+                    para.style.backgroundColor=color.color.name;
+                    console.log(color);
+                })
+                const p=document.createElement("p");
+                p.innerHTML=pokemon.name;
+                const img=document.createElement("img");
+                img.setAttribute("src",characteristics.sprites.front_shiny);
+                img.width=200;
+                img.height=200;
+        
+                para.appendChild(img);
+                para.appendChild(p);
+                maindiv.appendChild(para);
+            })
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}*/
+
+
+
+function fetchData(url) {
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      });
+  }
+  
+  function fetchColor(url) {
+    return fetchData(url)
+      .then(color => color.color.name);
+  }
+  
+  function fetchPokemonDetails(url) {
+    return fetchData(url)
+      .then(characteristics => {
+        console.log(characteristics);
+        const para = document.createElement("div");
+        para.style.border = "1px solid black";
+        para.style.padding = "5px";
+        para.style.borderRadius = "5px";
+  
+        return fetchColor(characteristics.species.url)
+          .then(color => {
+            para.style.backgroundColor = color;
+            const p = document.createElement("p");
+            p.innerHTML = characteristics.name;
+            const img = document.createElement("img");
+            img.setAttribute("src", characteristics.sprites.front_shiny);
+            img.width = 200;
+            img.height = 200;
+  
+            para.appendChild(img);
+            para.appendChild(p);
+  
+            return para;
+          });
+      });
+  }
+  
+  async function loadPokemon() {
+    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+
+      let pokemons = data.results;
+      let maindiv = document.getElementById("poken");
+      
+      pokemons.forEach(pokemon => {
+        fetchPokemonDetails(pokemon.url)
+          .then(para => {
+            maindiv.appendChild(para);
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  loadPokemon();
+   
+</script>

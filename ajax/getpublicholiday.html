@@ -1,0 +1,125 @@
+<div> 
+<style>
+        /* Table Styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 50px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+  
+  <select onchange="fetchholiday(this.value);">
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+      <option value="2027">2027</option>
+      <option value="2028">2028</option>
+  </select>
+  <div class="loader"></div>
+  <div id="holiday">
+
+  </div>
+  <!-- <table id="aa">
+      <thead>
+        <th>Date</th>
+        <th>Weekday</th>
+        <th>Public holiday</th>
+      </thead>
+      <tbody id="holiday">
+      
+      </tbody>
+  </table> -->
+</div>
+
+
+
+
+
+<script>
+
+ function showLoader() {
+      document.querySelector(".loader").style.display = "block";
+}
+
+  function hideLoader() {
+    document.querySelector(".loader").style.display = "none";
+  }
+
+
+  function fetchholiday(year){
+    let a=year.toString();
+    showLoader();
+    fetch('https://publicholidays.com.my/penang/')
+    .then(response => response.text())
+    .then(html => {
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = html;
+      
+      const tableContent = tempElement.querySelectorAll('.publicholidays');
+
+      hideLoader();
+      let i=0;
+      tableContent.forEach(element=>{
+        const table=document.createElement('table');
+        table.innerHTML+=`<thead>
+          <th>Date</th>
+          <th>Weekday</th>
+          <th>Public holiday</th>
+        </thead>`;
+
+        const tbody=document.createElement('tbody');
+        const getholiday=element.querySelectorAll('tbody tr');
+        getholiday.forEach(item=>{
+            tbody.append(item);
+        });
+        const holidayyear=tempElement.querySelectorAll('h2');
+        
+        const header=document.createElement('h2');
+        header.innerText=holidayyear[i].innerText;
+        table.append(tbody);
+        document.getElementById("holiday").append(header);
+        document.getElementById("holiday").append(table);
+        i++;
+      });  
+    })
+    .catch(error => {
+      console.error(error); document.getElementById("holiday").innerHTML="<tr><td colspan='3'>Celender record are of "+a+" are not valid yet</td></tr>";
+      hideLoader();
+    });
+    }
+
+    fetchholiday(2024);
+</script>
