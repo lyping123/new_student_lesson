@@ -1,7 +1,5 @@
-<?php include('header.php'); ?>
-
 <?php
-
+include('header.php');
 //method 1
 $randomString=rand(1000000000, 9999999999);
 
@@ -66,9 +64,10 @@ if($action==="checkout"){
     $qry->bind_param("s", $randomString);
     $qry->execute();
     $lastid=$qry->insert_id;
-
+    
     $qry=$conn->prepare("INSERT INTO carts(u_id,p_id,cart_id,qty) VALUES (?, ?, ?, ?)");
     foreach($sqldata as $data){
+        echo $data[0];
         $qry->bind_param("iisi", $data[0], $data[1], $lastid, $data[2]);
         $qry->execute();
     }

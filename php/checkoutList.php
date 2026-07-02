@@ -6,7 +6,8 @@ $cartId=isset($_GET['cart_id']) ? (int)$_GET['cart_id'] : 0;
 $qry="SELECT *,ci.cart_id receipt_id FROM cart_id ci 
 JOIN carts c ON ci.id = c.cart_id
 JOIN products p ON c.p_id = p.id
-WHERE ci.id = ? ORDER BY c.date_created DESC";
+WHERE ci.id = ? ORDER BY c.created_date DESC";
+
 $stmt = $conn->prepare($qry);
 $stmt->bind_param("i", $cartId);
 $stmt->execute();
@@ -20,7 +21,7 @@ if ($result->num_rows === 0) {
 } else {
     $row = $result->fetch_assoc();
     $receiptId = $row['receipt_id'];
-
+	$date = $row['created_date'];
     $checkoutItems = [];
     $subtotal = 0;
 
@@ -37,8 +38,8 @@ if ($result->num_rows === 0) {
         ];
     }
 
-    $serviceFee = round($subtotal * 0.05, 2);
-    $grandTotal = round($subtotal + $serviceFee, 2);
+    $serviceFee = round($subtotal * 0.05, 3);
+    $grandTotal = round($subtotal + $serviceFee, 3);
 }
 ?>
 
@@ -52,7 +53,7 @@ if ($result->num_rows === 0) {
 		<div class="checkout-section receipt-box">
 			<h2>Receipt ID</h2>
 			<div class="receipt-id"><?= htmlspecialchars($receiptId) ?></div>
-			<p class="receipt-note">Issued on <?= date('d M Y, h:i A') ?></p>
+			<p class="receipt-note">Issued on <?= date('d M Y, h:i A', strtotime($date)) ?></p>
 		</div>
 
 		<div class="checkout-section cart-detail-box">
