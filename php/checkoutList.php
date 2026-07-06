@@ -116,21 +116,12 @@ if ($result->num_rows === 0) {
 					<input type="radio" name="payment_method" value="E-Wallet" checked>
 					<span>E-Wallet</span>
 				</label>
-				<label class="payment-option">
-					<input type="radio" name="payment_method" value="FTX">
-					<span>FTX (Simulated)</span>
-				</label>
+				
 				<div class="payment_detail ewallet_detail" style="display: block;">
 					<p>Pay using your preferred E-Wallet app.</p>
 					<img src="./ewallet.jpg" alt="E-Wallet QR Code" width="400" height=500 />
 					<br>
-					<input type="file" name="payment_proof" accept="image/*" required>
-				</div>
-				<div class="payment_detail ftx_detail" style="display: none;">
-					<p>Simulated FTX Payment. Scan the fake QR code below to simulate payment.</p>
-					<img src="./ftx_simulated.jpg" alt="FTX QR Code" width="400" height=500 />
-					<br>
-					<input type="file" name="payment_proof" accept="image/*" required>
+					<input type="file" name="payment_proof" accept="image/*" >
 				</div>
 				<button type="submit" class="btn-add pay-btn" <?= empty($checkoutItems) ? 'disabled' : '' ?>>Confirm Payment</button>
 			</form>

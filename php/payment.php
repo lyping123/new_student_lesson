@@ -12,6 +12,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             mkdir($uploadDir, 0755, true);
         }
         $fileName = basename($paymentProof['name']);
+        
         $targetFilePath = $uploadDir . date("Ymd_His") . '_' . $fileName;
         $qry = $conn->prepare("UPDATE cart_id set c_status = ?, payment_amount=?, payment_date=?, payment_type=? where id = ?");
         $qry->bind_param("sdssi", $targetFilePath, $payment_amount, $payment_date, $payment_type, $cartid);

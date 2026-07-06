@@ -17,7 +17,7 @@
             <li><a href="main.php">Dashboard</a></li>
             <li><a href="product.php">Product List</a></li>
             <li><a href="cartList.php">Cart List</a></li>
-            <li><a href="checkoutList.php">Checkout List</a></li>
+            <li><a href="payment_historylist.php">Payment History List</a></li>
             <li>
                 <?php if(isset($_SESSION["username"]) && $_SESSION["username"]!="") {?>
                 <a href="#"><?=$_SESSION['username']?></a>
