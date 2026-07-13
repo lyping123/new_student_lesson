@@ -1,3 +1,7 @@
+<?php
+// 1. Wake up the Composer Librarian!
+require_once __DIR__ . '/vendor/autoload.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,6 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Welcome to the Product Management System</h1>
 </body>
 </html>
