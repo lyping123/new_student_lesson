@@ -1,6 +1,7 @@
 <?php
 // 1. Wake up the Composer Librarian!
 require_once __DIR__ . '/vendor/autoload.php';
+use App\Model\Products;
 
 // 2. Get the requested URL path (e.g., '/users' or '/products')
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -19,8 +20,14 @@ switch ($request_uri) {
 
     case '/products':
         // In a real app, you'd have a ProductController here
-        $controller = new App\Controllers\ProductController();
-        $controller->showProducts();
+        $products=new Products();
+        $result=$products->getAllProducts();
+        echo json_encode($result);
+        break;
+    case '/product-list':
+        $products=new Products();
+        $result=$products->getAllProducts();
+        echo json_encode($result);
         break;
     default:
         // Handle 404
