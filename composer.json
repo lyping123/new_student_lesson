@@ -1,5 +1,15 @@
 {
-    "require": {
-        "phpmailer/phpmailer": "^7.1"
-    }
+    "name": "user/new_student",
+    "autoload": {
+        "psr-4": {
+            "User\\NewStudent\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "leo lai",
+            "email": "lyping0526@gmail.com"
+        }
+    ],
+    "require": {}
 }

@@ -1,68 +1,35 @@
 <?php
-// ========== Step 1: Connect to the database ==========
-$conn = new mysqli("localhost", "root", "", "recipe_book");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = mysqli_connect("localhost","root","qwe123","recipe_db");
+$search = $_GET['search'] ?? '';
+$where = $search ? " WHERE main_ingredient LIKE '%$search%'" : '';
 
-// ========== Step 2: Handle the search bar ==========
-// If the user typed something, use that keyword; otherwise show everything
-$keyword = $_GET['keyword'] ?? '';
-
-$sql = "SELECT * FROM recipes WHERE main_ingredient LIKE '%$keyword%' ";
-$result = $conn->query($sql);   
-
-$count = $result->num_rows;
-$total_time = 0;
+$stats = mysqli_fetch_array(mysqli_query($conn, "SELECT AVG(cooking_time) avg, MIN(cooking_time) min FROM recipes$where"));
+$result = mysqli_query($conn, "SELECT * FROM recipes$where");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Recipe Book</title>
-</head>
-<body>
+    <style>
+    .card { 
+        border:1px solid black; 
+        padding:10px; 
+        margin:10px; 
+        width:200px; 
+        display:inline-block; }
+    .hi { 
+        background:yellow; }
+    </style> 
 
-<h1>My Recipe Book</h1>
+    <form>
+        <input name="search" placeholder="Ingredient">
+        <button>Search</button>
+    </form>
 
-<!-- Search bar: type an ingredient, e.g. Chicken -->
-<form method="GET">
-    Enter an ingredient: <input type="text" name="keyword" value="<?=$keyword; ?>">
-    <button type="submit">Search</button>
-</form>
+    <p>Average Cooking Time: <?= round($stats['avg'],1) ?> mins</p>
 
-<hr>
-
-<?php while ($r = $result->fetch_assoc()): 
-
-$total_time += $r['cooking_time'];
-$shortest_time = 999999;
-$shortest_name = "";
-if ($r['cooking_time'] < $shortest_time) {
-        $shortest_time = $r['cooking_time'];
-        $shortest_name = $r['recipe_name'];
-}
-?>
-    <div>
-        <h3>
-            <?=$r['recipe_name']; ?>
-            <?php if ($r['main_ingredient'] == $shortest_name) echo "  <<< Fastest recipe!"; ?>
-        </h3>
-        <p>Main ingredient: <?=$r['main_ingredient']; ?></p>
-        <p>Cooking time: <?=$r['cooking_time']; ?> minutes</p>
-        <p>Instructions: <?=$r['instructions']; ?></p>
+    <?php while($row = mysqli_fetch_array($result)){ ?>
+    <div class="card <?= $row['cooking_time']==$stats['min'] ? 'hi' : '' ?>">
+        <h3>             <?= $row['recipe_name'] ?></h3>
+        <p>Ingredient:   <?= $row['main_ingredient'] ?></p>
+        <p>Time:         <?= $row['cooking_time'] ?> mins</p>
+        <p>Instructions: <?= $row['instructions'] ?></p>
     </div>
-    <hr>
-
-<?php endwhile; ?>
-
-<?php if ($count > 0): ?>
-    <h2>Average cooking time: <?php echo round($total_time / $count, 1); ?> minutes</h2>
-<?php else: ?>
-    <p>No recipes found. Try a different keyword.</p>
-<?php endif; ?>
-
-</body>
-</html>
-
-<?php $conn->close(); ?>
+    <?php } ?>
