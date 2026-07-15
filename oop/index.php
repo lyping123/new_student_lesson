@@ -6,6 +6,7 @@ use App\Model\Products;
 // 2. Get the requested URL path (e.g., '/users' or '/products')
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+
 // 3. Simple Routing Logic
 switch ($request_uri) {
     case '/':
@@ -24,10 +25,38 @@ switch ($request_uri) {
         $result=$products->getAllProducts();
         echo json_encode($result);
         break;
-    case '/product-list':
+    case '/products/add':
         $products=new Products();
-        $result=$products->getAllProducts();
-        echo json_encode($result);
+        $name= $_POST['name'];
+        $price= $_POST['price'];
+        $quantity= $_POST['quantity'];
+        $requestData = [
+            'name' => $name,
+            'price' => $price,
+            'quantity' => $quantity
+        ];
+        $result=$products->addProduct($requestData);
+        echo json_encode(['success' => $result]);
+        break;
+    case '/products/update':
+        $products=new Products();
+        $name= $_POST['name'];
+        $price= $_POST['price'];
+        $quantity= $_POST['quantity'];
+        $requestData = [
+            'name' => $name,
+            'price' => $price,
+            'quantity' => $quantity
+        ];
+        $id = $_GET['id'];
+        $result=$products->updateProduct($id, $requestData);
+        echo json_encode(['success' => $result]);
+        break;
+    case '/products/delete':
+        $products=new Products();
+        $id = $_GET['id'];
+        $result=$products->deleteProduct($id);
+        echo json_encode(['success' => $result]);
         break;
     default:
         // Handle 404

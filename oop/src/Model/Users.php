@@ -1,18 +1,17 @@
 <?php 
 namespace App\Model;
-
 use App\Config\Database;
 
-class Products {
+class Users{
     private $conn;
-    private $table_name = "products";
+    private $table_name = "users";
 
     public function __construct() {
         $database = new Database();
         $this->conn = $database->getConnection();
     }
 
-    public function getAllProducts() {
+    public function getAllUsers() {
         $query = "SELECT * FROM " . $this->table_name;
         $sttr = $this->conn->query($query);
         $result = [];
@@ -20,14 +19,14 @@ class Products {
         return $result;
     }
 
-    public function addProduct($requestData) {
+    public function addUser($requestData) {
         $name = $requestData['name'];
-        $price = $requestData['price'];
-        $quantity = $requestData['quantity'];
+        $email = $requestData['email'];
+        $password = $requestData['password'];
 
-        $query = "INSERT INTO " . $this->table_name . " (sku, price, quantity) VALUES (?, ?, ?)";
+        $query = "INSERT INTO " . $this->table_name . " (name, email, password) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sds", $name, $price, $quantity);
+        $stmt->bind_param("sds", $name, $email, $password);
 
         if ($stmt->execute()) {
             return true;
@@ -36,14 +35,14 @@ class Products {
         }
     }
 
-    public function updateProduct($id, $requestData) {
+    public function updateUser($id, $requestData) {
         $name = $requestData['name'];
-        $price = $requestData['price'];
-        $quantity = $requestData['quantity'];
+        $email = $requestData['email'];
+        $password = $requestData['password'];
 
-        $query = "UPDATE " . $this->table_name . " SET sku = ?, price = ?, quantity = ? WHERE id = ?";
+        $query = "UPDATE " . $this->table_name . " SET name = ?, email = ?, password = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sdsi", $name, $price, $quantity, $id);
+        $stmt->bind_param("sdsi", $name, $email, $password, $id);
 
         if ($stmt->execute()) {
             return true;
@@ -51,7 +50,7 @@ class Products {
             return false;
         }
     }
-    public function deleteProduct($id) {
+    public function deleteUser($id) {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $id);
@@ -64,3 +63,5 @@ class Products {
     }
 }
 
+
+?>
