@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = new PHPMailer();
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPDebug = 2; // Enable debug output
+    $mail->SMTPDebug = 0; // Enable debug output
     $mail->SMTPAuth = true;
     $mail->Username = 'lyping0526@gmail.com';
     $mail->Password = 'mkavuonupbpgfuse';
