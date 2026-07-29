@@ -19,6 +19,7 @@ if(isset($_POST["generate_qr"])){
     $qry->execute();
     if($qry->affected_rows > 0) {
         echo "Visitor added successfully.";
+        
         header("Location: visitor.php");
     } else {
         echo "Error adding visitor: " . $qry->error;

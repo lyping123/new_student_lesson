@@ -7,13 +7,25 @@ if(isset($_GET['token'])){
     $qry->execute();
     $result = $qry->get_result();
     if($result->num_rows > 0){
-        echo "Check-in successful.";
+        
+        $row = $result->fetch_assoc();
+        $visitor_id = $row['id'];
+        $status="IN";
+        $qry=$conn->prepare("INSERT INTO records(token_id,checkstatus) VALUES (?, ?)");
+        $qry->bind_param("ss", $visitor_id, $status);
+        $qry->execute();
+        if($qry->affected_rows > 0) {
+            echo "Check-in recorded successfully.";
+            header("Location: visitor_list.php");
+            exit();
+        } else {
+            echo "Error recording check-in: " . $qry->error;
+        }
     } else {
         echo "Invalid token.";
     }
-
+    
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
