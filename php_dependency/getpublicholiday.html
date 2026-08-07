@@ -47,25 +47,14 @@
       <option value="2026">2026</option>
       <option value="2027">2027</option>
       <option value="2028">2028</option>
+      <option value="2029">2029</option>
   </select>
   <div class="loader"></div>
   <div id="holiday">
 
   </div>
-  <!-- <table id="aa">
-      <thead>
-        <th>Date</th>
-        <th>Weekday</th>
-        <th>Public holiday</th>
-      </thead>
-      <tbody id="holiday">
-      
-      </tbody>
-  </table> -->
+ 
 </div>
-
-
-
 
 
 <script>
@@ -85,6 +74,7 @@
     fetch('https://publicholidays.com.my/penang/')
     .then(response => response.text())
     .then(html => {
+      
       const tempElement = document.createElement('div');
       tempElement.innerHTML = html;
       
@@ -106,8 +96,8 @@
             tbody.append(item);
         });
         const holidayyear=tempElement.querySelectorAll('h2');
-        
-        const header=document.createElement('h2');
+       
+        const header=document.createElement('h2' );
         header.innerText=holidayyear[i].innerText;
         table.append(tbody);
         document.getElementById("holiday").append(header);
@@ -121,5 +111,5 @@
     });
     }
 
-    fetchholiday(2024);
+    fetchholiday(2026);
 </script>

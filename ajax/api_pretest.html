@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>API Pretest</h1>
+    <div class="form-group">
+        <label>name</label>
+        <input type="text" id="name" class="form-control">
+         <label>ic_number</label>
+        <input type="text" id="ic_number" class="form-control">
+         <label>course</label>
+        <input type="text" id="course" class="form-control">
+         <label>phone</label>
+        <input type="text" id="phone" class="form-control">
+         <label>Id</label>
+        <input type="text" id="id" class="form-control">
+        <button id="submit" onclick="insertData()" class="btn btn-primary">Submit</button>
+        <button id="update" onclick="updateData()" class="btn btn-success">Update</button>
+        <button id="delete" onclick="deleteData()" class="btn btn-danger">Delete</button>
+    </div>
+    <table id="resulttable" border="1">
+        <thead>
+            <th>name</th>
+            <th>ic_number</th>
+            <th>course</th>
+            <th>phone</th>
+        </thead>
+    </table>
+
+    <script>
+        const baseUrl="http://api.synergycollege2u.com/api/v1/";
+        function sendData() {
+        let formData = new FormData();
+        // 3. Send via AJAX (fetch)
+        fetch(`${baseUrl}pretest/student`, {
+           
+        })
+        .then(response => response.json()) // We expect PHP to reply in JSON
+        .then(data => {
+           console.log(data.data);
+           let resultTable = document.getElementById('resulttable');
+           resultTable.innerHTML = ''; // Clear previous results
+           let row=data.data;
+           let headerRow = document.createElement('tr');
+            for (let key in data.data[0]) {
+                let th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+            resultTable.appendChild(headerRow);
+           
+           row.forEach(item => {
+            
+            let dataRow = document.createElement('tr');
+            for (let key in item) {
+                let td = document.createElement('td');
+                td.textContent = item[key];
+                dataRow.appendChild(td);
+            }
+            resultTable.appendChild(dataRow);
+           
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    function updateData(){
+        
+           let nameValue = document.getElementById('name').value;
+           let icNumberValue = document.getElementById('ic_number').value;
+           let courseValue = document.getElementById('course').value;
+           let phoneValue = document.getElementById('phone').value;
+           let idValue = document.getElementById('id').value; // Assuming you have a way to get the ID of the record to update
+            // 2. Package the data
+            let formData = new FormData();
+            formData.append('name', nameValue);
+            formData.append('ic_number', icNumberValue);
+            formData.append('course', courseValue);
+            formData.append('phone_number', phoneValue);
+            formData.append('status', 'active');
+             
+            // 3. Send via AJAX (fetch)
+            
+            fetch(`${baseUrl}pretest/student/${idValue}/update`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // We expect PHP to reply in JSON
+            .then(data => {
+                if(data.status===200) {
+                    alert("Data updated successfully.");
+                }else{
+                    alert("Failed to update data.");
+                }
+                sendData();
+            })
+            .catch(error => console.error('Error:', error));
+
+    }
+     function insertData(){
+        
+           let nameValue = document.getElementById('name').value;
+           let icNumberValue = document.getElementById('ic_number').value;
+           let courseValue = document.getElementById('course').value;
+           let phoneValue = document.getElementById('phone').value;
+            // 2. Package the data
+            let formData = new FormData();
+            formData.append('name', nameValue);
+            formData.append('ic_number', icNumberValue);
+            formData.append('course', courseValue);
+            formData.append('phone_number', phoneValue);
+            formData.append('status', 'active');
+            // 3. Send via AJAX (fetch)
+            fetch(`${baseUrl}pretest/student/add`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // We expect PHP to reply in JSON
+            .then(data => {
+                if(data.status===200) {
+                    alert("Data inserted successfully.");
+                }else{
+                    alert("Failed to insert data.");
+                }
+                sendData();
+            })
+            .catch(error => console.error('Error:', error));
+
+    }
+    function deleteData(){
+        
+          
+           let idValue = document.getElementById('id').value;
+            // 2. Package the data
+            let formData = new FormData();
+           
+            // 3. Send via AJAX (fetch)
+            fetch(`${baseUrl}pretest/student/${idValue}/delete`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // We expect PHP to reply in JSON
+            .then(data => {
+                if(data.status===200) {
+                    alert("Data deleted successfully.");
+                }else{
+                    alert("Failed to delete data.");
+                }
+                sendData();
+            })
+            .catch(error => console.error('Error:', error));
+
+    }
+
+
+    sendData();
+
+    </script>
+</body>
+</html>

@@ -28,7 +28,6 @@
         .catch(error => console.error('Error:', error));
     }
     
-    
 
     function insertData(e){
         if(e.key == 'Enter'){
